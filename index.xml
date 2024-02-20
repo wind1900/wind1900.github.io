@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>ᕦʕ •ᴥ•ʔᕤ</title>
+    <link>https://wind1900.github.io/</link>
+    <description>Recent content on ᕦʕ •ᴥ•ʔᕤ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>wind1900</copyright>
+    <lastBuildDate>Mon, 19 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://wind1900.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>58anY 解析</title>
+      <link>https://wind1900.github.io/ctf/58any_%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Mon, 19 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/ctf/58any_%E8%A7%A3%E6%9E%90/</guid>
+      <description>本题是egelloc.nwp的reverse的最后一题，为了避免泄露答案，所有的单词均以倒序拼写。根据前面几关的练习，已知这道题自定义了一个模拟器，拥有自己的指令，寄存器和内存，需要你输入模拟器指令来拿到flag。但是与前面的题目不同的是，指令和寄存器的标志都是随机的，不是固定的，无法通过静态分析获得，因此需要根据现有已知的条件动态推断出所有的指令和寄存器等。&#xA;58anY 的体系结构 内存 内存由一个byte[1024]的数组a构成。内存的前768个byte为代码段，保存用户输入的指令。768后的内存为数据段，数据存储的地址从0开始。因为栈寄存器起始为0，a[768]往后的一段空间应仅供栈使用，避免出现冲突。&#xA;寄存器 寄存器包括4个通用寄存器a b c d, 栈寄存器s，指令寄存器i以及标志寄存器f 。寄存器地址紧跟在内存后面，因此在代码中也用a[1024]~a[1030]来访问。在指令中由不同的操作数代表不同寄存器，每个操作数的二进制只有一位为1，即用1，2，4，8，16，32，64，128中的7个来代表寄存器。由于模拟器运行时会随机打乱操作数的顺序，无法通过静态分析知道操作数与寄存器的对应关系&#xA;指令 每个指令长度为3 bytes，指令与两个操作数各用一个byte，但是指令与操作数的位置每道题不一样，仅在最后构造读取flag指令的时候需要注意。每个指令也由20~27这8个数来表示，对应关系未知。&#xA;imm op1, op2 将op2表示的数存入op1表示的寄存器 add op1, op2 将op2表示的寄存器的值加到op1表示的寄存器 stk op1, op2 栈操作，op2不为0时，将op2表示的寄存器中的值入栈，op1不为0时,再将栈顶数出栈于op1表示的寄存器 stm op1, op2 以op1表示的寄存器中的值作为地址,写入op2表示的寄存器中的值 ldm op1, op2 以op2表示的寄存器中的值作为地址，读取数据并存入op1表示的寄存器 cmp op1, op2 比较op1和op2表示的寄存器中的值，并根据大小，是否相等设置相关标志位 jmp op1, op2 op1为0时，无条件跳转到op2表示的寄存器中的值，op1不为0时，判断op1和标志寄存器与的结果，不为0则跳转到op2表示的寄存器中的值，通过修改指令寄存器的值实现跳转 sys op1, op2 根据op1的值进行不同的系统调用，并将结果存入op2表示的寄存器（exit不需要将结果存入寄存器）。系统调用需要的参数通过寄存器a,b,c传入 指令描述 系统调用 该模拟器实现的系统调用有open, read, write, sleep, exit等，使用open, read, write即可读取flag并打印。&#xA;已知条件 虽然随机打乱了寄存器，指令，系统调用和标志位的顺序，我们仍可以观察程序运行的状态来推测出一些指令和寄存器的标志。以下是代码流程中一些需要注意的地方：&#xA;随机打乱的函数中调用的是rand()而非没有srand()，即每次产生的随机数序列都是相同的，寄存器，指令与操作码的对应关系不会改变。 判断指令使用的是and操作，顺序参照上表顺序，若指令有多位为1，则会执行多条指令，若指令为0，则没有对应指令执行，不会报错，继续执行下一条指令。 指令寄存器i从0开始每执行一条指令就加1，代码段最开始都会置0，如果程序没有终止，那指令寄存器就会从0一直加到0xFF，之后加一溢出重新变为0，达到死循环状态。 与寄存器相关的操作都使用==进行判断操作数对应哪个寄存器，如果没找到对应寄存器或使用0为操作数，则会报错输出&amp;#34;unknown register&amp;#34;并退出程序。 判断系统调用使用and操作，若有多位位1，则会执行多个系统调用，若没找到对应系统调用，不会报错，继续执行下一条指令。 推断过程 通过构建不同的指令，根据程序执行的状态是退出或者死循环来逐步推测出指令，寄存器，和系统调用的对应关系。&#xA;寻找无效寄存器 将指令码设置为0xff，那么一定会执行imm，再遍历所有寄存器标志，如果程序退出并输出&amp;#34;unknown register&amp;#34;，那么该标志为 register_invalid 。</description>
+      <content:encoded><![CDATA[
+<p>
+本题是egelloc.nwp的reverse的最后一题，为了避免泄露答案，所有的单词均以倒序拼写。根据前面几关的练习，已知这道题自定义了一个模拟器，拥有自己的指令，寄存器和内存，需要你输入模拟器指令来拿到flag。但是与前面的题目不同的是，指令和寄存器的标志都是随机的，不是固定的，无法通过静态分析获得，因此需要根据现有已知的条件动态推断出所有的指令和寄存器等。</p>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+58anY 的体系结构
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+内存
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>内存由一个byte[1024]的数组a构成。内存的前768个byte为代码段，保存用户输入的指令。768后的内存为数据段，数据存储的地址从0开始。因为栈寄存器起始为0，a[768]往后的一段空间应仅供栈使用，避免出现冲突。</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+寄存器
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>寄存器包括4个通用寄存器a b c d, 栈寄存器s，指令寄存器i以及标志寄存器f 。寄存器地址紧跟在内存后面，因此在代码中也用a[1024]~a[1030]来访问。在指令中由不同的操作数代表不同寄存器，每个操作数的二进制只有一位为1，即用1，2，4，8，16，32，64，128中的7个来代表寄存器。由于模拟器运行时会随机打乱操作数的顺序，无法通过静态分析知道操作数与寄存器的对应关系</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+指令
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>每个指令长度为3 bytes，指令与两个操作数各用一个byte，但是指令与操作数的位置每道题不一样，仅在最后构造读取flag指令的时候需要注意。每个指令也由2<sup>0</sup>~2<sup>7</sup>这8个数来表示，对应关系未知。</p>
+<figure>
+<table>
+<tbody>
+<tr>
+<td>imm op1, op2</td>
+<td>将op2表示的数存入op1表示的寄存器</td>
+</tr>
+<tr>
+<td>add op1, op2</td>
+<td>将op2表示的寄存器的值加到op1表示的寄存器</td>
+</tr>
+<tr>
+<td>stk op1, op2</td>
+<td>栈操作，op2不为0时，将op2表示的寄存器中的值入栈，op1不为0时,再将栈顶数出栈于op1表示的寄存器</td>
+</tr>
+<tr>
+<td>stm op1, op2</td>
+<td>以op1表示的寄存器中的值作为地址,写入op2表示的寄存器中的值</td>
+</tr>
+<tr>
+<td>ldm op1, op2</td>
+<td>以op2表示的寄存器中的值作为地址，读取数据并存入op1表示的寄存器</td>
+</tr>
+<tr>
+<td>cmp op1, op2</td>
+<td>比较op1和op2表示的寄存器中的值，并根据大小，是否相等设置相关标志位</td>
+</tr>
+<tr>
+<td>jmp op1, op2</td>
+<td>op1为0时，无条件跳转到op2表示的寄存器中的值，op1不为0时，判断op1和标志寄存器与的结果，不为0则跳转到op2表示的寄存器中的值，通过修改指令寄存器的值实现跳转</td>
+</tr>
+<tr>
+<td>sys op1, op2</td>
+<td>根据op1的值进行不同的系统调用，并将结果存入op2表示的寄存器（exit不需要将结果存入寄存器）。系统调用需要的参数通过寄存器a,b,c传入</td>
+</tr>
+</tbody>
+</table>
+<figcaption>
+指令描述
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+系统调用
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>该模拟器实现的系统调用有open, read, write, sleep, exit等，使用open, read, write即可读取flag并打印。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+已知条件
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>虽然随机打乱了寄存器，指令，系统调用和标志位的顺序，我们仍可以观察程序运行的状态来推测出一些指令和寄存器的标志。以下是代码流程中一些需要注意的地方：</p>
+<ul>
+<li>随机打乱的函数中调用的是rand()而非没有srand()，即每次产生的随机数序列都是相同的，寄存器，指令与操作码的对应关系不会改变。</li>
+<li>判断指令使用的是and操作，顺序参照上表顺序，若指令有多位为1，则会执行多条指令，若指令为0，则没有对应指令执行，不会报错，继续执行下一条指令。</li>
+<li>指令寄存器i从0开始每执行一条指令就加1，代码段最开始都会置0，如果程序没有终止，那指令寄存器就会从0一直加到0xFF，之后加一溢出重新变为0，达到死循环状态。</li>
+<li>与寄存器相关的操作都使用==进行判断操作数对应哪个寄存器，如果没找到对应寄存器或使用0为操作数，则会报错输出&#34;unknown register&#34;并退出程序。</li>
+<li>判断系统调用使用and操作，若有多位位1，则会执行多个系统调用，若没找到对应系统调用，不会报错，继续执行下一条指令。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-2">
+<h2 id="headline-7">
+推断过程
+</h2>
+<div id="outline-text-headline-7" class="outline-text-2">
+<p>通过构建不同的指令，根据程序执行的状态是退出或者死循环来逐步推测出指令，寄存器，和系统调用的对应关系。</p>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+寻找无效寄存器
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<p>将指令码设置为0xff，那么一定会执行imm，再遍历所有寄存器标志，如果程序退出并输出&#34;unknown register&#34;，那么该标志为 <code>register_invalid</code> 。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> register <span style="color:#f92672">in</span> set([<span style="color:#ae81ff">0x01</span>, <span style="color:#ae81ff">0x02</span>, <span style="color:#ae81ff">0x04</span>, <span style="color:#ae81ff">0x08</span>, <span style="color:#ae81ff">0x10</span>, <span style="color:#ae81ff">0x20</span>, <span style="color:#ae81ff">0x40</span>, <span style="color:#ae81ff">0x80</span>]):
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">0xff</span> register, register</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+寻找sys指令和exit系统调用
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
+<p>遍历指令码和系统调用，并将op2设置为 <code>register_invalid</code> ，那么当程序退出且没有输出&#34;unknown register&#34;的时候，即为通过exit退出。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># [sys] [exit], register_invalid</span>
+</span></span><span style="display:flex;"><span>  possible_values <span style="color:#f92672">=</span> set([<span style="color:#ae81ff">0x01</span>, <span style="color:#ae81ff">0x02</span>, <span style="color:#ae81ff">0x04</span>, <span style="color:#ae81ff">0x08</span>, <span style="color:#ae81ff">0x10</span>, <span style="color:#ae81ff">0x20</span>, <span style="color:#ae81ff">0x40</span>, <span style="color:#ae81ff">0x80</span>])
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> instruction <span style="color:#f92672">in</span> possible_values:
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> syscall <span style="color:#f92672">in</span> possible_values:
+</span></span><span style="display:flex;"><span>          instruction syscall, register_invalid</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+寻找imm指令和指令寄存器i
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<p>现在已知sys指令，从剩余指令和所有寄存器中遍历，并将op2设置为 <code>register_invalid</code> ，然后添加一条无效寄存器的指令来终止程序。在剩下的指令中add，stk，stm，ldm，cmp，jmp都会因为op2为无效寄存器而退出，只有imm改变指令寄存器i设置的情况会使程序进入死循环。另外要注意特殊情况，当register_invalid==1的时候，指令寄存器i被置为1，执行第二条无效语句也会退出，因此多加一条imm语句使终止程序的语句后移。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># [imm] [i], register_invalid</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 0xff register_invalid, register_invalid</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> inst <span style="color:#f92672">in</span> get_possible_instructions():
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> op1 <span style="color:#f92672">in</span> get_possible_registers():
+</span></span><span style="display:flex;"><span>          inst op1, register_invalid
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> register_invalid <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>              inst op1, register_invalid
+</span></span><span style="display:flex;"><span>          <span style="color:#ae81ff">0xff</span> register_invalid, register_invalid <span style="color:#75715e"># 用来终止程序</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
+寻找stk指令
+</h3>
+<div id="outline-text-headline-11" class="outline-text-3">
+<p>使用stk指令将寄存器i置为0以达到死循环的目的，若指令不为stk，则会导致程序退出。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># [stk] i, 0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm  register_invalid, 0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> inst <span style="color:#f92672">in</span> get_possible_instructions():
+</span></span><span style="display:flex;"><span>      inst i, <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>      imm register_invalid, <span style="color:#ae81ff">0</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-3">
+<h3 id="headline-12">
+寻找栈寄存器s
+</h3>
+<div id="outline-text-headline-12" class="outline-text-3">
+<p>使用stk指令操作栈寄存器s，注意stk指令在两个操作数均不为0时会依次进行入栈和出栈操作，入栈时会先将栈寄存器加一，再存入数据。因此使用指令 <code>stk i, s</code> 会使指令寄存器变为1进而执行无效寄存器指令退出。其它寄存器会使指令寄存器始终为0进入死循环。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># stk i, [s]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm register_invalid, 0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> register_s <span style="color:#f92672">in</span> get_possible_registers():
+</span></span><span style="display:flex;"><span>      stk i, register_s
+</span></span><span style="display:flex;"><span>      imm register_invalid, <span style="color:#ae81ff">0</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-3">
+<h3 id="headline-13">
+寻找ldm指令
+</h3>
+<div id="outline-text-headline-13" class="outline-text-3">
+<p>目前未知的指令还有add，stm，ldm，cmp，jmp，使用指令 <code>ldm i, s</code> 会使指令寄存器始终为0进入死循环，而其它指令会继续执行遇到无效寄存器指令退出。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># [ldm] i, s</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm register_invalid, 0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> inst <span style="color:#f92672">in</span> get_possible_instructions():
+</span></span><span style="display:flex;"><span>      inst i, s
+</span></span><span style="display:flex;"><span>      imm register_invalid, <span style="color:#ae81ff">0</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+寻找stm指令
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<p>目前未知的指令还有add，stm，cmp，jmp，已知寄存器只有s和i。寻找stm的思路就是随机选择另一个寄存器 <code>reg</code> （通用寄存器或标志寄存器）， 配合stm与ldm来对指令寄存器赋值，跳转到第4条无效寄存器指令退出。如果是add，cmp指令，内存中不会写入4，赋给指令寄存器的值为0，进入死循环。如果是jmp指令 <code>jmp reg, s</code> ，需要判断 <code>reg</code> 是否为标志寄存器，若不为标志寄存器，则不会发生跳转，若刚好随机选择了标志寄存器，为了防止跳转到第4条指令，需要使跳转条件不成立，因此将 <code>reg</code> 的值设为 <code>0xff-reg</code> ，两个数的与为0，不会跳转。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm reg, 0xff-reg</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm s, 4</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># [stm] reg, s</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># ldm i, reg</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm register_invalid, 0</span>
+</span></span><span style="display:flex;"><span>  reg <span style="color:#f92672">=</span> get_possible_registers()<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> inst <span style="color:#f92672">in</span> get_possible_instructions():
+</span></span><span style="display:flex;"><span>      imm reg, <span style="color:#ae81ff">0xff</span><span style="color:#f92672">-</span>reg
+</span></span><span style="display:flex;"><span>      imm s, <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>      inst reg, s
+</span></span><span style="display:flex;"><span>      ldm i, reg
+</span></span><span style="display:flex;"><span>      imm register_invalid, <span style="color:#ae81ff">0</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
+寻找write系统调用
+</h3>
+<div id="outline-text-headline-15" class="outline-text-3">
+<p>虽然仍然不能区分剩下的通用寄存器和标志寄存器，但是我们知道标准输出的描述符是1，因此可以将这五个寄存器的的值都设为1，在内存地址1的地方写入一个特殊字符，遍历系统调用检查是否打印了特殊字符。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm abcdf, 1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm s, 0x99</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># stm a, s</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># sys [write], register_invalid</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> syscall <span style="color:#f92672">in</span> get_possible_syscalls():
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> get_possible_registers():
+</span></span><span style="display:flex;"><span>          imm r, <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>      imm s, <span style="color:#ae81ff">0x99</span>
+</span></span><span style="display:flex;"><span>      stm a, s
+</span></span><span style="display:flex;"><span>      sys syscall, register_invalid</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-3">
+<h3 id="headline-16">
+寻找通用寄存器abc
+</h3>
+<div id="outline-text-headline-16" class="outline-text-3">
+<p>知道write系统调用后，可以尝试构造一个特殊字符串，遍历寄存器abc并调用write检查输出来找到这三个寄存器。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm [a], 1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm [b], 0x92</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># stm [b], [b]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm [b], 0x91</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># stm [b], [b]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm b, 0x90</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># stm [b], [b]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm [c], 3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># sys write, register_invalid</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-3">
+<h3 id="headline-17">
+寻找sleep系统调用
+</h3>
+<div id="outline-text-headline-17" class="outline-text-3">
+<p>将寄存器a设为一个较大的值，遍历剩余系统调用，过了很久还没退出的则是sleep。</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#75715e"># try to construct:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm a, 80</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm b, 0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># imm c, 0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># sys [sleep], register_invalid</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-3">
+<h3 id="headline-18">
+寻找open read系统调用
+</h3>
+<div id="outline-text-headline-18" class="outline-text-3">
+<p>在本机新建一个临时文本文件，遍历剩余系统调用尝试打开文件并读取文件内容，然后使用write输出，若能成功输出内容则找到了open和read。代码略。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-2">
+<h2 id="headline-19">
+总结
+</h2>
+<div id="outline-text-headline-19" class="outline-text-2">
+<p>在推测出open，read后，就可以读取flag并用write输出的控制台了。</p>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-2">
+<h2 id="headline-20">
+参考
+</h2>
+<div id="outline-text-headline-20" class="outline-text-2">
+<ul>
+<li><a href="https://www.digitalwhisper.co.il/files/Zines/0x91/DW145-6-Yan85_SideChannel.pdf"> Side-Channel ומתקפות anY58 על ארכיטקטורת</a></li>
+</ul>
+</div>
+</div>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
