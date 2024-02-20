@@ -7,8 +7,46 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>wind1900</copyright>
-    <lastBuildDate>Mon, 19 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://wind1900.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>龙腾喵跃红包封面解谜</title>
+      <link>https://wind1900.github.io/puzzlehunt/%E9%BE%99%E8%85%BE%E5%96%B5%E8%B7%83%E7%BA%A2%E5%8C%85%E5%B0%81%E9%9D%A2%E8%A7%A3%E8%B0%9C/</link>
+      <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/puzzlehunt/%E9%BE%99%E8%85%BE%E5%96%B5%E8%B7%83%E7%BA%A2%E5%8C%85%E5%B0%81%E9%9D%A2%E8%A7%A3%E8%B0%9C/</guid>
+      <description> 首先注意红色的部分，一共四行，每行前两个字都标为红色。“莫思”最能引起我的联想，即摩斯密码，那其它三行也应该是一种编码的名称谐音，四行分别为：五笔，旗语，摩斯，棋盘。每行后面标记为红色的部位，或能看成字母，或能看成数字，或者是特定编码用到的图形，翻译后得到：&#xA;五笔：空拍 旗语：weikong 摩斯：jiezou 棋盘：shangse 怎么给节奏上色？当时没想明白。其实多观察一下乐谱的格式就能发现，每一列的节奏型都很相似，如果转化为一个表格再上色，有可能会解出答案。后来要了提示知道了解法： 按照表格填色后即可得到答案LONG JUMP，也祝大家龙年龙腾喵跃。&#xA;题目链接 https://mp.weixin.qq.com/s/AF8BJjf07MjLq34hA1ncjg </description>
+      <content:encoded><![CDATA[
+<p>
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.2ob94j2o0j.webp"/>
+</figure>
+</p>
+<p>
+首先注意红色的部分，一共四行，每行前两个字都标为红色。“莫思”最能引起我的联想，即摩斯密码，那其它三行也应该是一种编码的名称谐音，四行分别为：五笔，旗语，摩斯，棋盘。每行后面标记为红色的部位，或能看成字母，或能看成数字，或者是特定编码用到的图形，翻译后得到：</p>
+<div class="src src-text">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>  五笔：空拍
+</span></span><span style="display:flex;"><span>  旗语：weikong
+</span></span><span style="display:flex;"><span>  摩斯：jiezou
+</span></span><span style="display:flex;"><span>  棋盘：shangse</span></span></code></pre></div>
+</div>
+<p>
+怎么给节奏上色？当时没想明白。其实多观察一下乐谱的格式就能发现，每一列的节奏型都很相似，如果转化为一个表格再上色，有可能会解出答案。后来要了提示知道了解法：
+<figure><img src="https://wind1900.github.io/picx-images-hosting/6786a973e2281afb4cfa97cb2646770.54xhjkvdmq.webp"/>
+</figure>
+</p>
+<p>
+按照表格填色后即可得到答案LONG JUMP，也祝大家龙年龙腾喵跃。</p>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+题目链接
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/AF8BJjf07MjLq34hA1ncjg">https://mp.weixin.qq.com/s/AF8BJjf07MjLq34hA1ncjg</a></li>
+</ul>
+</div>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>58anY 解析</title>
       <link>https://wind1900.github.io/ctf/58any_%E8%A7%A3%E6%9E%90/</link>
