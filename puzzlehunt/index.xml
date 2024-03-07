@@ -7,8 +7,121 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>wind1900</copyright>
-    <lastBuildDate>Mon, 04 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 Mar 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://wind1900.github.io/puzzlehunt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>江湖解谜总结二</title>
+      <link>https://wind1900.github.io/puzzlehunt/%E6%B1%9F%E6%B9%96%E8%A7%A3%E8%B0%9C%E6%80%BB%E7%BB%93%E4%BA%8C/</link>
+      <pubDate>Thu, 07 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/puzzlehunt/%E6%B1%9F%E6%B9%96%E8%A7%A3%E8%B0%9C%E6%80%BB%E7%BB%93%E4%BA%8C/</guid>
+      <description>玉虚宫练武 赛博记录员 人工智障模仿人类的第一步——学会写周记。 这道题一开始就是做第一张图里的填空，然后按问号位置提取出字母，填不出所有的也没关系，大致可以猜到结果是什么，比如我最开始能填出来的只有这些&#xA;答案 字母 ? fifa world cup i pleasant goat and big big wolf l arknights i Joshua Barkman b ? ? luckin coffee i jvr music s youth with you w ? league of legends e KFC k ? ? 猜测这些字母组成bilibili&amp;#39;s weekly，而B站确实有个每周必看，但是怎么和下面的图联系起来呢？&#xA;观察图片中的相似处，每个图都有个四位数，像是日期，也都有一个分数，分母都是10。B站视频的id都是十位，那这个分数可能就是用来ID提取，日期有可能是视频的日期，也可能是每周必看的日期，找到每周必看后先找封面是这些图片的视频再找到ID。&#xA;搜索过程中发现，每期必看都在周五更新，而且都有个标题。我第一个尝试的是左下角的图片，8月23日对应的只有第22期，在2019年8月23日更新的，标题是霸道总裁黄晓明。进去看到第一个视频的封面就和题里的十分相似，于是可以明确四位数就是更新日期，再从视频列表中找出相似的原封面和对应视频ID。而这个标题也让我想到第一张图里一个还没填的“今天在某部真人秀里学到了一句强势拒绝别人指手画脚的话呢”，原来下面的视频封面，或者说每周必看标题，也都和上面的答案有关系！&#xA;这样找到所有日期对应的每周必看，通过标题联系到第一张图里每一行并可以填完剩余空格，再找到视频ID，按照图一问题的顺序提取就能得到最终结果。&#xA;不过找相似图片的过程并不是很顺利，有些很难找到到底哪个是原图，比如： 后来队友发现了一个好方法，把眼镜摘掉再看，AI生成的图和原图看起来就一模一样。最终结果就不放出来了，有兴趣的可以试试找这几个图0113，0603，0708，0908。</description>
+      <content:encoded><![CDATA[
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+玉虚宫练武
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+赛博记录员
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>人工智障模仿人类的第一步——学会写周记。
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.4jnuk7mx04.webp"/>
+</figure>
+
+<figure><img src="https://wind1900.github.io/picx-images-hosting/extraction[1].60tzlyseea.webp"/>
+</figure>
+</p>
+<p>
+这道题一开始就是做第一张图里的填空，然后按问号位置提取出字母，填不出所有的也没关系，大致可以猜到结果是什么，比如我最开始能填出来的只有这些</p>
+<table>
+<thead>
+<tr>
+<th>答案</th>
+<th>字母</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>?</td>
+</tr>
+<tr>
+<td>fifa world cup</td>
+<td>i</td>
+</tr>
+<tr>
+<td>pleasant goat and big big wolf</td>
+<td>l</td>
+</tr>
+<tr>
+<td>arknights</td>
+<td>i</td>
+</tr>
+<tr>
+<td>Joshua Barkman</td>
+<td>b</td>
+</tr>
+<tr>
+<td></td>
+<td>?</td>
+</tr>
+<tr>
+<td></td>
+<td>?</td>
+</tr>
+<tr>
+<td>luckin coffee</td>
+<td>i</td>
+</tr>
+<tr>
+<td>jvr music</td>
+<td>s</td>
+</tr>
+<tr>
+<td>youth with you</td>
+<td>w</td>
+</tr>
+<tr>
+<td></td>
+<td>?</td>
+</tr>
+<tr>
+<td>league of legends</td>
+<td>e</td>
+</tr>
+<tr>
+<td>KFC</td>
+<td>k</td>
+</tr>
+<tr>
+<td></td>
+<td>?</td>
+</tr>
+<tr>
+<td></td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<p>
+猜测这些字母组成bilibili&#39;s weekly，而B站确实有个每周必看，但是怎么和下面的图联系起来呢？</p>
+<p>
+观察图片中的相似处，每个图都有个四位数，像是日期，也都有一个分数，分母都是10。B站视频的id都是十位，那这个分数可能就是用来ID提取，日期有可能是视频的日期，也可能是每周必看的日期，找到每周必看后先找封面是这些图片的视频再找到ID。<br>
+搜索过程中发现，每期必看都在周五更新，而且都有个标题。我第一个尝试的是左下角的图片，8月23日对应的只有<a href="https://www.bilibili.com/v/popular/weekly/?num=22">第22期</a>，在2019年8月23日更新的，标题是霸道总裁黄晓明。进去看到第一个视频的封面就和题里的十分相似，于是可以明确四位数就是更新日期，再从视频列表中找出相似的原封面和对应视频ID。而这个标题也让我想到第一张图里一个还没填的“今天在某部真人秀里学到了一句强势拒绝别人指手画脚的话呢”，原来下面的视频封面，或者说每周必看标题，也都和上面的答案有关系！<br>
+这样找到所有日期对应的每周必看，通过标题联系到第一张图里每一行并可以填完剩余空格，再找到视频ID，按照图一问题的顺序提取就能得到最终结果。<br>
+不过找相似图片的过程并不是很顺利，有些很难找到到底哪个是原图，比如：
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.8hg80xz1m4.webp"/>
+</figure>
+
+后来队友发现了一个好方法，把眼镜摘掉再看，AI生成的图和原图看起来就一模一样。最终结果就不放出来了，有兴趣的可以试试找这几个图<a href="https://www.bilibili.com/v/popular/weekly/?num=199">0113</a>，<a href="https://www.bilibili.com/v/popular/weekly/?num=167">0603</a>，<a href="https://www.bilibili.com/v/popular/weekly/?num=172">0708</a>，<a href="https://www.bilibili.com/v/popular/weekly/?num=233">0908</a>。</p>
+</div>
+</div>
+</div>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>江湖解谜总结一</title>
       <link>https://wind1900.github.io/puzzlehunt/%E6%B1%9F%E6%B9%96%E8%A7%A3%E8%B0%9C%E6%80%BB%E7%BB%93%E4%B8%80/</link>
