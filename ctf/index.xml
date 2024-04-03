@@ -7,8 +7,77 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>wind1900</copyright>
-    <lastBuildDate>Mon, 19 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Apr 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://wind1900.github.io/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>三月总结</title>
+      <link>https://wind1900.github.io/ctf/%E4%B8%89%E6%9C%88%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 01 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/ctf/%E4%B8%89%E6%9C%88%E6%80%BB%E7%BB%93/</guid>
+      <description>摘要 三月的大部分时间都花在了两个兴趣上，而因此容易废寝忘食&#xA;总结 月初和月底分别参加了两个puzzle hunt活动，一次差一点完赛，一次在最后时刻完赛 另外在pwncollege拿到了绿带，还剩最后的蓝带了 两则趣事 有一天正在做题的时候，终端突然出现了一堆乱码，什么命令都没有反应，像是服务器中病毒了一样。后来发现好像是在播放一个视频，有熟悉的Yan的房间，还有一些红字，写的1,000,000 Solves&#xA;后来才知道，原来是平台达到了一百万次成功提交进行的庆祝，而这第一百万次，应该是我触发的。为什么这么说呢，Yan发了一条状态说道&amp;#34;The millionth flag was from level 84 of the Program Interaction module&amp;#34;，这正是我当时正在刷的题，而且是从后往前做，做的速度特别快。相当于中了次彩票 绿带最后的题目都有一些难度，因此我会去discord里看看其他人的讨论，有一次无意中浏览到私聊信息，发现竟然有人给我留言，是问之前的题目的（据说是从最近做题记录上找到的我），但已经是五天前的了。没想到在网上还能认识新朋友，后来与这位外国友人交流了很多题目。本来想着拿到蓝带以后再去帮忙解答问题，现在就能帮到别人，也是非常开心的&#xA;计划 接下来重心要放在找工作相关的，不能把全部时间用去做题了，不过还是希望能在六月拿到蓝带，再试着参加一些比赛并随缘找队友&#xA;结语 植树节也在三月，大概是这个时候适合种树吧，那么种树第二好的时间是什么时候呢？</description>
+      <content:encoded><![CDATA[
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+摘要
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>三月的大部分时间都花在了两个兴趣上，而因此容易废寝忘食</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+总结
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>月初和月底分别参加了两个puzzle hunt活动，一次差一点完赛，一次在最后时刻完赛
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.syourrvax.webp"/>
+</figure>
+
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.1setb9vzq6.webp"/>
+</figure>
+
+另外在pwncollege拿到了绿带，还剩最后的蓝带了
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.8s32tt1vof.webp"/>
+</figure>
+</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+两则趣事
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p>有一天正在做题的时候，终端突然出现了一堆乱码，什么命令都没有反应，像是服务器中病毒了一样。后来发现好像是在播放一个视频，有熟悉的Yan的房间，还有一些红字，写的1,000,000 Solves</p>
+<p>
+后来才知道，原来是平台达到了一百万次成功提交进行的庆祝，而这第一百万次，应该是我触发的。为什么这么说呢，Yan发了一条<a href="https://defcon.social/@Zardus/111865419819488221">状态</a>说道&#34;The millionth flag was from level 84 of the Program Interaction module&#34;，这正是我当时正在刷的题，而且是从后往前做，做的速度特别快。相当于中了次彩票
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.sypyqzlnc.webp"/>
+</figure>
+
+<figure><img src="https://wind1900.github.io/picx-images-hosting/eefdbf4c2d318506f863715cefca7fa.9kfybjt5eg.webp"/>
+</figure>
+</p>
+<p>
+绿带最后的题目都有一些难度，因此我会去discord里看看其他人的讨论，有一次无意中浏览到私聊信息，发现竟然有人给我留言，是问之前的题目的（据说是从最近做题记录上找到的我），但已经是五天前的了。没想到在网上还能认识新朋友，后来与这位外国友人交流了很多题目。本来想着拿到蓝带以后再去帮忙解答问题，现在就能帮到别人，也是非常开心的</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-2">
+<h2 id="headline-4">
+计划
+</h2>
+<div id="outline-text-headline-4" class="outline-text-2">
+<p>接下来重心要放在找工作相关的，不能把全部时间用去做题了，不过还是希望能在六月拿到蓝带，再试着参加一些比赛并随缘找队友</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
+结语
+</h2>
+<div id="outline-text-headline-5" class="outline-text-2">
+<p>植树节也在三月，大概是这个时候适合种树吧，那么种树第二好的时间是什么时候呢？</p>
+</div>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>58anY 解析</title>
       <link>https://wind1900.github.io/ctf/58any_%E8%A7%A3%E6%9E%90/</link>

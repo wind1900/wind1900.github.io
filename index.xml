@@ -7,21 +7,226 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>wind1900</copyright>
-    <lastBuildDate>Wed, 13 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Apr 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://wind1900.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FISHunt总结一</title>
+      <link>https://wind1900.github.io/puzzlehunt/fishunt%E6%80%BB%E7%BB%93%E4%B8%80/</link>
+      <pubDate>Mon, 01 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/puzzlehunt/fishunt%E6%80%BB%E7%BB%93%E4%B8%80/</guid>
+      <description>简介 这是一个小型的解谜活动，题目出在微信公众号上，比赛时间是3月29日晚8点到3月31日晚8点。一共也就两天时间，不过这次我们成功完赛了，在比赛结束前的80分钟。 这次的题目主题很明确，都和美术艺术有关，而且难度适中，没有讨厌的谐音梗网络梗，每道题基本上都需要两步以上才能得到最终答案。通过这次活动欣赏到了许多著名艺术作品。&#xA;第一题 细密画 这幅细密画颇有异域风情，画家细细描绘每一个场景。传说只有正确地连接局部，才能揭开画作的真正面貌…… 都是一些字谜&#xA;第一排 虚线内的格子应填入相同的形状，只是角度不同，易得“浮”字 倜傥和隽永部分合在一起，为“雕”字 单人旁和象组合成“像”字 口里有个冬，为“图”字 下面的横杠为减的意思，六七指的是笔画的第六七画，减去后得到“纹” 一个有两个读音的多音字，为“乐” 成语是双管齐下，为“管” 墨汁减去土，剩下为“黑” 第二排 金木水火土少了“木” 一个反的片，片加反为“版” 蓝色的线开始没想到什么意思，后来想到了是镜面，镜像补全后为“画” 成语是两肋插刀，为“插” 把数字和图画都转换成汉字，十十亻七为“花”字 这个是最后一个想到的，一开始以为是这个字是什么目，其实就是目眩来表示眼睛发花，图中少的部分拼到一起为“弦” 多音字，为“和” 箭头右边繁体字比简体字多出来的部分，找到这个字为“声”，繁体字是聲 第三排 箭头右边为运算符号相似的汉字，减号即为“一”字 镜像补全后为“宣” 就是个“纸”字，图片没其它意思。。 黄色方框和下面的方框有双箭头连结，下面弓箭加豆为短，短相反为长，弓加长为“张” 搜索易得“恭” 琴瑟，取“琴”字 土字去掉第三画，为“十” 左边的字都能与右边字组成ABAC形式的词，第三个是可歌可泣，问号是“歌” 第四排 阔别，图中少了舌和刂，组成“刮” 这个图解释了遇到减数字应该怎么做，刃去掉第三画为“刀” 四排二列是刀，上面加上前为“剪” 车口耳组成“辑” 迅速的交集，即相同的部分为辶，铭和奖相同的部分为夕，四排七列倒过来为罒，组成“逻” 镜像补全后为“曲” 目和眼意思相同，问号为“目” 肥皂剧是电视剧，问号为“剧” 第五排 二排一列为木，四排七列为目，组成“相” 蓝分成上中下三部分，取中间的部分下面加上见，为“览” 伞去掉三四五画为“个” 西二小，组成“票” 扌石组成“拓” 十十豆又组成“鼓” 学去掉一三画为“字” 这个一开始我以为右下角是一寸照片，后来猜想到一横还是减号，是冠减去寸，和耳丶组成“院” 第六排 二十为廿，两个倒过来组成“册” 易得“博” 这里说明了双箭头代表反义，黄色区域里是相同的部分为八，父和公的反义都为母 甲倒过来，加上耳为“邮” 山东简称鲁，去掉日为“鱼” 星空又名星月夜，月加空为“腔” 五个口，注意连结部分，组成“唱” 反战，图中少了又戈，组成“戏” 现在第一步做完了，接下来按照题目中说的连接局部就可以了，其实在填字的过程中也会发现有些相邻的字可以组成词语。连接的时候不用考虑方向，连成无向图即可。在连完后，连通的字与孤立的字表达的意思显而易见。</description>
+      <content:encoded><![CDATA[
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+简介
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>这是一个小型的解谜活动，题目出在<a href="https://mp.weixin.qq.com/s/6Iw1aLHo1OkqGeOO5Tgj3A">微信公众号</a>上，比赛时间是3月29日晚8点到3月31日晚8点。一共也就两天时间，不过这次我们成功完赛了，在比赛结束前的80分钟。
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.1setb9vzq6.webp"/>
+</figure>
+
+这次的题目主题很明确，都和美术艺术有关，而且难度适中，没有讨厌的谐音梗网络梗，每道题基本上都需要两步以上才能得到最终答案。通过这次活动欣赏到了许多著名艺术作品。</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+第一题 细密画
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>这幅细密画颇有异域风情，画家细细描绘每一个场景。传说只有正确地连接局部，才能揭开画作的真正面貌……
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.2h82vblx64.webp"/>
+</figure>
+
+都是一些字谜</p>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+第一排
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<ol>
+<li>虚线内的格子应填入相同的形状，只是角度不同，易得“浮”字</li>
+<li>倜傥和隽永部分合在一起，为“雕”字</li>
+<li>单人旁和象组合成“像”字</li>
+<li>口里有个冬，为“图”字</li>
+<li>下面的横杠为减的意思，六七指的是笔画的第六七画，减去后得到“纹”</li>
+<li>一个有两个读音的多音字，为“乐”</li>
+<li>成语是双管齐下，为“管”</li>
+<li>墨汁减去土，剩下为“黑”</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+第二排
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<ol>
+<li>金木水火土少了“木”</li>
+<li>一个反的片，片加反为“版”</li>
+<li>蓝色的线开始没想到什么意思，后来想到了是镜面，镜像补全后为“画”</li>
+<li>成语是两肋插刀，为“插”</li>
+<li>把数字和图画都转换成汉字，十十亻七为“花”字</li>
+<li>这个是最后一个想到的，一开始以为是这个字是什么目，其实就是目眩来表示眼睛发花，图中少的部分拼到一起为“弦”</li>
+<li>多音字，为“和”</li>
+<li>箭头右边繁体字比简体字多出来的部分，找到这个字为“声”，繁体字是聲</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+第三排
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<ol>
+<li>箭头右边为运算符号相似的汉字，减号即为“一”字</li>
+<li>镜像补全后为“宣”</li>
+<li>就是个“纸”字，图片没其它意思。。</li>
+<li>黄色方框和下面的方框有双箭头连结，下面弓箭加豆为短，短相反为长，弓加长为“张”</li>
+<li>搜索易得“恭”</li>
+<li>琴瑟，取“琴”字</li>
+<li>土字去掉第三画，为“十”</li>
+<li>左边的字都能与右边字组成ABAC形式的词，第三个是可歌可泣，问号是“歌”</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+第四排
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<ol>
+<li>阔别，图中少了舌和刂，组成“刮”</li>
+<li>这个图解释了遇到减数字应该怎么做，刃去掉第三画为“刀”</li>
+<li>四排二列是刀，上面加上前为“剪”</li>
+<li>车口耳组成“辑”</li>
+<li>迅速的交集，即相同的部分为辶，铭和奖相同的部分为夕，四排七列倒过来为罒，组成“逻”</li>
+<li>镜像补全后为“曲”</li>
+<li>目和眼意思相同，问号为“目”</li>
+<li>肥皂剧是电视剧，问号为“剧”</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+第五排
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<ol>
+<li>二排一列为木，四排七列为目，组成“相”</li>
+<li>蓝分成上中下三部分，取中间的部分下面加上见，为“览”</li>
+<li>伞去掉三四五画为“个”</li>
+<li>西二小，组成“票”</li>
+<li>扌石组成“拓”</li>
+<li>十十豆又组成“鼓”</li>
+<li>学去掉一三画为“字”</li>
+<li>这个一开始我以为右下角是一寸照片，后来猜想到一横还是减号，是冠减去寸，和耳丶组成“院”</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+第六排
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<ol>
+<li>二十为廿，两个倒过来组成“册”</li>
+<li>易得“博”</li>
+<li>这里说明了双箭头代表反义，黄色区域里是相同的部分为八，父和公的反义都为母</li>
+<li>甲倒过来，加上耳为“邮”</li>
+<li>山东简称鲁，去掉日为“鱼”</li>
+<li>星空又名星月夜，月加空为“腔”</li>
+<li>五个口，注意连结部分，组成“唱”</li>
+<li>反战，图中少了又戈，组成“戏”</li>
+</ol>
+<p>现在第一步做完了，接下来按照题目中说的连接局部就可以了，其实在填字的过程中也会发现有些相邻的字可以组成词语。连接的时候不用考虑方向，连成无向图即可。在连完后，连通的字与孤立的字表达的意思显而易见。</p>
+</div>
+</div>
+</div>
+</div>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>三月总结</title>
+      <link>https://wind1900.github.io/ctf/%E4%B8%89%E6%9C%88%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 01 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/ctf/%E4%B8%89%E6%9C%88%E6%80%BB%E7%BB%93/</guid>
+      <description>摘要 三月的大部分时间都花在了两个兴趣上，而因此容易废寝忘食&#xA;总结 月初和月底分别参加了两个puzzle hunt活动，一次差一点完赛，一次在最后时刻完赛 另外在pwncollege拿到了绿带，还剩最后的蓝带了 两则趣事 有一天正在做题的时候，终端突然出现了一堆乱码，什么命令都没有反应，像是服务器中病毒了一样。后来发现好像是在播放一个视频，有熟悉的Yan的房间，还有一些红字，写的1,000,000 Solves&#xA;后来才知道，原来是平台达到了一百万次成功提交进行的庆祝，而这第一百万次，应该是我触发的。为什么这么说呢，Yan发了一条状态说道&amp;#34;The millionth flag was from level 84 of the Program Interaction module&amp;#34;，这正是我当时正在刷的题，而且是从后往前做，做的速度特别快。相当于中了次彩票 绿带最后的题目都有一些难度，因此我会去discord里看看其他人的讨论，有一次无意中浏览到私聊信息，发现竟然有人给我留言，是问之前的题目的（据说是从最近做题记录上找到的我），但已经是五天前的了。没想到在网上还能认识新朋友，后来与这位外国友人交流了很多题目。本来想着拿到蓝带以后再去帮忙解答问题，现在就能帮到别人，也是非常开心的&#xA;计划 接下来重心要放在找工作相关的，不能把全部时间用去做题了，不过还是希望能在六月拿到蓝带，再试着参加一些比赛并随缘找队友&#xA;结语 植树节也在三月，大概是这个时候适合种树吧，那么种树第二好的时间是什么时候呢？</description>
+      <content:encoded><![CDATA[
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+摘要
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>三月的大部分时间都花在了两个兴趣上，而因此容易废寝忘食</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+总结
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>月初和月底分别参加了两个puzzle hunt活动，一次差一点完赛，一次在最后时刻完赛
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.syourrvax.webp"/>
+</figure>
+
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.1setb9vzq6.webp"/>
+</figure>
+
+另外在pwncollege拿到了绿带，还剩最后的蓝带了
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.8s32tt1vof.webp"/>
+</figure>
+</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+两则趣事
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p>有一天正在做题的时候，终端突然出现了一堆乱码，什么命令都没有反应，像是服务器中病毒了一样。后来发现好像是在播放一个视频，有熟悉的Yan的房间，还有一些红字，写的1,000,000 Solves</p>
+<p>
+后来才知道，原来是平台达到了一百万次成功提交进行的庆祝，而这第一百万次，应该是我触发的。为什么这么说呢，Yan发了一条<a href="https://defcon.social/@Zardus/111865419819488221">状态</a>说道&#34;The millionth flag was from level 84 of the Program Interaction module&#34;，这正是我当时正在刷的题，而且是从后往前做，做的速度特别快。相当于中了次彩票
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.sypyqzlnc.webp"/>
+</figure>
+
+<figure><img src="https://wind1900.github.io/picx-images-hosting/eefdbf4c2d318506f863715cefca7fa.9kfybjt5eg.webp"/>
+</figure>
+</p>
+<p>
+绿带最后的题目都有一些难度，因此我会去discord里看看其他人的讨论，有一次无意中浏览到私聊信息，发现竟然有人给我留言，是问之前的题目的（据说是从最近做题记录上找到的我），但已经是五天前的了。没想到在网上还能认识新朋友，后来与这位外国友人交流了很多题目。本来想着拿到蓝带以后再去帮忙解答问题，现在就能帮到别人，也是非常开心的</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-2">
+<h2 id="headline-4">
+计划
+</h2>
+<div id="outline-text-headline-4" class="outline-text-2">
+<p>接下来重心要放在找工作相关的，不能把全部时间用去做题了，不过还是希望能在六月拿到蓝带，再试着参加一些比赛并随缘找队友</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
+结语
+</h2>
+<div id="outline-text-headline-5" class="outline-text-2">
+<p>植树节也在三月，大概是这个时候适合种树吧，那么种树第二好的时间是什么时候呢？</p>
+</div>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>江湖解谜总结四</title>
       <link>https://wind1900.github.io/puzzlehunt/%E6%B1%9F%E6%B9%96%E8%A7%A3%E8%B0%9C%E6%80%BB%E7%BB%93%E5%9B%9B/</link>
       <pubDate>Wed, 13 Mar 2024 00:00:00 +0000</pubDate>
       <guid>https://wind1900.github.io/puzzlehunt/%E6%B1%9F%E6%B9%96%E8%A7%A3%E8%B0%9C%E6%80%BB%E7%BB%93%E5%9B%9B/</guid>
-      <description>门生擂台 这应该是这次总结的最后一道题了，第三部分的其它题要么太难要么太简单。这道题是和队友一起做的，主要时间花在了搜索和填词，整个思路比较有意思&#xA;经文残本 这是散落各处的经文残本。相传，为了保守其中蕴藏的秘密，弟子们将全卷拆开后，留下了一部分用以相互印证&#xA;封面 动物 国家 美国州 古罗马军事家 布拉德·皮特主演电影 群岛 西班牙省份 日本料理 幻之宝可梦 航天器 体育项目 文学名著 披头士歌曲 仪器 碎片 AND ER GA GE GONE HIP I IALA INGBE IPPI ISLANDDS JIKIS K L LLI MA MI MOMET N ND R RAGO S S SA SMAR SSMITH SU TAL TAMUS TH THTHE YA 这个题就是用下面的碎片组词，最后正好可以拼成14个单词对应上面的14个类型。最开始的时候可以选择比较简单的封面或者碎片，比如布拉德·皮特主演电影，JIKIS，TAMUS 电影是Mr. &amp;amp; Mrs. Smith，碎片里有SSMITH，但是却找不到前面的Mr &amp;amp; Mr。另外用搜词网站https://nutrimatic.org/ 搜索JIKIS最有可能的词是国家tajikistan，碎片里却找不到两边的ta和tan。而搜索TAMUS出来最有可能的是动物hippopotamus，碎片里还有HIP，少了popo 这时候尝试把少的部分也都列出来，结果突然发现&#xA;封面 单词 碎片 缺少部分 动物 hippopotamus HIP TAMUS popo 国家 tajikistan JIKIS ta tan 美国州 mississippi MI IPPI ssiss 布拉德·皮特主演电影 Mr.</description>
+      <description>这应该是这次总结的最后一道题了，第三部分的其它题要么太难要么太简单。这道题是和队友一起做的，主要时间花在了搜索和填词，整个思路比较有意思&#xA;门生擂台 经文残本 这是散落各处的经文残本。相传，为了保守其中蕴藏的秘密，弟子们将全卷拆开后，留下了一部分用以相互印证&#xA;封面 动物 国家 美国州 古罗马军事家 布拉德·皮特主演电影 群岛 西班牙省份 日本料理 幻之宝可梦 航天器 体育项目 文学名著 披头士歌曲 仪器 碎片 AND ER GA GE GONE HIP I IALA INGBE IPPI ISLANDDS JIKIS K L LLI MA MI MOMET N ND R RAGO S S SA SMAR SSMITH SU TAL TAMUS TH THTHE YA 这个题就是用下面的碎片组词，最后正好可以拼成14个单词对应上面的14个类型。最开始的时候可以选择比较简单的封面或者碎片，比如布拉德·皮特主演电影，JIKIS，TAMUS 电影是Mr. &amp;amp; Mrs. Smith，碎片里有SSMITH，但是却找不到前面的Mr &amp;amp; Mr。另外用搜词网站https://nutrimatic.org/ 搜索JIKIS最有可能的词是国家tajikistan，碎片里却找不到两边的ta和tan。而搜索TAMUS出来最有可能的是动物hippopotamus，碎片里还有HIP，少了popo 这时候尝试把少的部分也都列出来，结果突然发现&#xA;封面 单词 碎片 缺少部分 动物 hippopotamus HIP TAMUS popo 国家 tajikistan JIKIS ta tan 美国州 mississippi MI IPPI ssiss 布拉德·皮特主演电影 Mr.</description>
       <content:encoded><![CDATA[
+<p>这应该是这次总结的最后一道题了，第三部分的其它题要么太难要么太简单。这道题是和队友一起做的，主要时间花在了搜索和填词，整个思路比较有意思</p>
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
 门生擂台
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
-<p>这应该是这次总结的最后一道题了，第三部分的其它题要么太难要么太简单。这道题是和队友一起做的，主要时间花在了搜索和填词，整个思路比较有意思</p>
 <div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
 经文残本
@@ -240,6 +445,8 @@
 </table>
 <p>下一步呢，把缺少的两个字母都连起来，发现可以组成四个词potassimu，ryuzaki，meter，twitter，这几个词都有一个字母可以与其对应：KLMX <br>
 本以为做到这就结束了，没想到提交答案得到回复目前为止完全正确，继续加油。接下来应该做什么，联想到这道题的规律，应该是在KLMX里重复两次填入两个字母，搜索后得到Karl Marx，提交后正确</p>
+<p>
+最后再把致谢链接放在这里吧 <a href="https://jh2024.jianghujiemi.fun/victory">https://jh2024.jianghujiemi.fun/victory</a></p>
 </div>
 </div>
 </div>
