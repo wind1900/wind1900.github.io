@@ -7,8 +7,42 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>wind1900</copyright>
-    <lastBuildDate>Mon, 01 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 May 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://wind1900.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FISHunt总结二</title>
+      <link>https://wind1900.github.io/puzzlehunt/fishunt%E6%80%BB%E7%BB%93%E4%BA%8C/</link>
+      <pubDate>Sun, 19 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/puzzlehunt/fishunt%E6%80%BB%E7%BB%93%E4%BA%8C/</guid>
+      <description>第六题 与波洛克共进一餐 很久没更新，因为还是想抓紧拿到蓝带。 这道题其实不难，但是你需要了解和艺术馆有关的新闻：近期一些环保主义者将各种食物泼到名画上，找到对应的画作即可提取出答案。&#xA;Meta 元境 这道题虽然第一步解出来了大部分字母，但是当时没拼出来完整的句子，于是根据提示里得到的信息直接从第二步开始做了。&#xA;此时从标题元境得知这是个展览，需要找到参加展览的不同国家的地图去匹配，但要注意这里要找的并不是世界地图！我就卡在了这里，实际要找的是展览区域的地图，然后将匹配的国家的展览主题找出来，提取就行了。&#xA;最后一步需要用到十个小题标题上的画了，它们都和这个主题展之前某一届的主题海报非常类似。最后再根据FISHUNT的主题海报（正好有十条波浪），按照年份从新到老将这些主题的名字排列，用海报中的鱼做对角线提取，得到最终结果，完赛！</description>
+      <content:encoded><![CDATA[
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+第六题 与波洛克共进一餐
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>很久没更新，因为还是想抓紧拿到蓝带。
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.2doiupk0p6.webp"/>
+</figure>
+
+这道题其实不难，但是你需要了解和艺术馆有关的新闻：近期一些环保主义者将各种食物泼到名画上，找到对应的画作即可提取出答案。</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+Meta 元境
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>这道题虽然第一步解出来了大部分字母，但是当时没拼出来完整的句子，于是根据提示里得到的信息直接从第二步开始做了。<br>
+此时从标题元境得知这是个展览，需要找到参加展览的不同国家的地图去匹配，但要注意这里要找的并不是世界地图！我就卡在了这里，实际要找的是展览区域的地图，然后将匹配的国家的展览主题找出来，提取就行了。<br>
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.9nzm5taww8.webp"/>
+</figure>
+
+最后一步需要用到十个小题标题上的画了，它们都和这个主题展之前某一届的主题海报非常类似。最后再根据FISHUNT的主题海报（正好有十条波浪），按照年份从新到老将这些主题的名字排列，用海报中的鱼做对角线提取，得到最终结果，完赛！</p>
+</div>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>FISHunt总结一</title>
       <link>https://wind1900.github.io/puzzlehunt/fishunt%E6%80%BB%E7%BB%93%E4%B8%80/</link>
