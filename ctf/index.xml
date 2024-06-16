@@ -7,8 +7,58 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>wind1900</copyright>
-    <lastBuildDate>Mon, 01 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Jun 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://wind1900.github.io/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>第一次CTF比赛</title>
+      <link>https://wind1900.github.io/ctf/%E7%AC%AC%E4%B8%80%E6%AC%A1ctf%E6%AF%94%E8%B5%9B/</link>
+      <pubDate>Sun, 16 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/ctf/%E7%AC%AC%E4%B8%80%E6%AC%A1ctf%E6%AF%94%E8%B5%9B/</guid>
+      <description>前言 算是第一次参加CTF比赛吧：https://2024.justctf.team/ 。找了一个队伍一起做，结果还不错，最终做出来一道简单的逆向题&#xA;分析 运行程序后会得到&#xA;JCTF COMMANDER v0.1 1. create file 2. rename file 3. print file 4. delete file 5. edit file 0. exit 虚拟了一个文件系统，根据选项可以创建，修改，打印，删除文件等。再把程序放进IDA中看一下 函数有很多，而且每个函数里嵌套层数也特别多，很多都是没用的函数。由于我不知道IDA中如何清理这些没用的函数，只好用gdb从头跑一遍看看都是干啥的，gdb里也没符号信息，不好下断点&#xA;第一个 sub_5840() 的作用是创建文件夹“fs”当作虚拟文件系统，后面的一系列方法是将不同选项对应的函数地址赋值到栈上的变量，格式很类似，从v5到v13。但是注意到程序只给了六个选项，而这里分配了9个，那么多出来的三个是什么呢？实验得知6和8都会报参数错误，7是一个archive选项，9或其它数字会导致段错误。再进一步观察选项7，它会调用 system(&amp;#34;tar cf &amp;#34;archive_name&amp;#34; *&amp;#34;) ！解题入口应该就在这里了&#xA;从网上搜索得知，如果可以创建文件 --checkpoint=1 和 --checkpoint-action=exec=sh ，那么tar命令的*就会展开成那两个特殊的文件名并当作tar的参数解析，作用就是可以执行shell。但是创建文件时发现它有一个文件名检查，只能包含字母数字或者 - . ，不能存在 = 或者 \ ，然后卡在这里快一天&#xA;后来尝试了创建链接，其它各种参数，不带 = 的写法，都没成功。就在比赛快结束的时候，我突然想到要不试试第2个重命名选项吧，结果重命名里没有检查文件名！接下来就简单了，新建文件，重命名文件，最后选择隐藏选项7，拿到shell。看来任一个函数都要仔细检查不能跳过&#xA;结论 再接再厉</description>
+      <content:encoded><![CDATA[
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+前言
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>算是第一次参加CTF比赛吧：<a href="https://2024.justctf.team/">https://2024.justctf.team/</a> 。找了一个队伍一起做，结果还不错，最终做出来一道简单的<a href="https://s3.cdn.justctf.team/b59b4ed9-aa22-4622-aca6-294db30962b9/star.tar.gz">逆向题</a></p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+分析
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>运行程序后会得到</p>
+<div class="src src-text">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>JCTF COMMANDER v0.1
+</span></span><span style="display:flex;"><span>1. create file
+</span></span><span style="display:flex;"><span>2. rename file
+</span></span><span style="display:flex;"><span>3. print file
+</span></span><span style="display:flex;"><span>4. delete file
+</span></span><span style="display:flex;"><span>5. edit file
+</span></span><span style="display:flex;"><span>0. exit</span></span></code></pre></div>
+</div>
+<p>虚拟了一个文件系统，根据选项可以创建，修改，打印，删除文件等。再把程序放进IDA中看一下
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.8hgc1biui3.webp"/>
+</figure>
+
+函数有很多，而且每个函数里嵌套层数也特别多，很多都是没用的函数。由于我不知道IDA中如何清理这些没用的函数，只好用gdb从头跑一遍看看都是干啥的，gdb里也没符号信息，不好下断点<br>
+第一个 <code>sub_5840()</code> 的作用是创建文件夹“fs”当作虚拟文件系统，后面的一系列方法是将不同选项对应的函数地址赋值到栈上的变量，格式很类似，从v5到v13。但是注意到程序只给了六个选项，而这里分配了9个，那么多出来的三个是什么呢？实验得知6和8都会报参数错误，7是一个archive选项，9或其它数字会导致段错误。再进一步观察选项7，它会调用 <code>system(&#34;tar cf &#34;archive_name&#34; *&#34;)</code> ！解题入口应该就在这里了<br>
+从网上搜索得知，如果可以创建文件 <code>--checkpoint=1</code> 和 <code>--checkpoint-action=exec=sh</code> ，那么tar命令的*就会展开成那两个特殊的文件名并当作tar的参数解析，作用就是可以执行shell。但是创建文件时发现它有一个文件名检查，只能包含字母数字或者 <code>- .</code> ，不能存在 <code>=</code> 或者 <code>\</code> ，然后卡在这里快一天<br>
+后来尝试了创建链接，其它各种参数，不带 <code>=</code> 的写法，都没成功。就在比赛快结束的时候，我突然想到要不试试第2个重命名选项吧，结果重命名里没有检查文件名！接下来就简单了，新建文件，重命名文件，最后选择隐藏选项7，拿到shell。看来任一个函数都要仔细检查不能跳过</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+结论
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p>再接再厉</p>
+</div>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>三月总结</title>
       <link>https://wind1900.github.io/ctf/%E4%B8%89%E6%9C%88%E6%80%BB%E7%BB%93/</link>
