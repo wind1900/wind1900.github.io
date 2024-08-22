@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://wind1900.github.io/w.png" />
+<title>CCBC15总结1 | ᕦʕ •ᴥ•ʔᕤ</title>
+<meta name="title" content="CCBC15总结1" />
+<meta name="description" content="简介 一年一度的CCBC又到了，今年不再孤军奋战，并且完成了小目标：前100名成功完赛。 有了队友大家一起想问题思路会更多，在一起讨论也会很开心。 本来是92名的，结果前面有几个作弊队伍被抓出来变成了88名。下图是解题时间统计。 镜中何物 前面几个区的题都挺简单，直接从第三个区开始讲起。 首先左边的字母连起来读，会得到三个单词shadow，pigpen，semaphore，后面两个代表猪圈密码和旗语，第一个没有想出来。现在知道了第一个也是一个和旗语很像的密码，更熟悉的名称是Chain of Death，发表在Shadow杂志上。
+之后注意到名字左边还对应了0、1、2，字母都是3个一组的，猜测到应该是转成三位三进制数，然后再变成对应的第几个字母。
+至于怎么转，应该还是和镜面有关。每个字母在这三种密码中都是一个图形，图形在镜子中的倒影则对应了另一个字母的密码，找到用的哪种密码，就可以变成数字了。
+北京人儿到纽约 这道题一看就和儿话音有关，但是题目里只有一些词，并没有其他提示，需要自己找到联系。
+一个尝试就是把每个词翻译成英文后，后面加上er。发现它们会变成新的词汇，其中“是”这个有点难，想了很久才发现要用be。之后又发现这些词可以两两一组，暗示了一个东西，而这个东西就是填空需要的词。
+屁股 butter 是 beer Harry Potter 关 offer 关心 career interview 玉米 corner 分 center position 宠物 peter 公园 parker spider man 这时候会发现，英文填空的地方*代表的也是er，这道题的主题果然就是er。之后按照字母提取得到&#34;vyimportantpson&#34;，这里也少了两个er，补充后得到&#34;very important person&#34;，但是提交不正确。后来队友想到了它们有个缩写是VIP，而vip加上er也能凑出新单词，正确答案就这样出来了。
+算算看吧 这道题给了很多算式和结果，很明显需要用不同进制使算式成立。然后注意只需要从二进制检查到26进制就行，因为只有26个字母。
+算式 答案 进制 十进制结果 字母 12-0.22-0.02 11.1 4 5.25 d 357-345.670.02 11.2 9 10.222 i 88÷8&#43;222÷888 11.49 18 19.25 r (10-1)x10 40 5 20 e (2000-1)÷10&#43;10 202.2 3 20." />
+<meta name="keywords" content="" />
+
+
+
+
+
+
+  
+  <meta property="og:title" content="CCBC15总结1" />
+<meta property="og:description" content="简介 一年一度的CCBC又到了，今年不再孤军奋战，并且完成了小目标：前100名成功完赛。 有了队友大家一起想问题思路会更多，在一起讨论也会很开心。 本来是92名的，结果前面有几个作弊队伍被抓出来变成了88名。下图是解题时间统计。 镜中何物 前面几个区的题都挺简单，直接从第三个区开始讲起。 首先左边的字母连起来读，会得到三个单词shadow，pigpen，semaphore，后面两个代表猪圈密码和旗语，第一个没有想出来。现在知道了第一个也是一个和旗语很像的密码，更熟悉的名称是Chain of Death，发表在Shadow杂志上。
+之后注意到名字左边还对应了0、1、2，字母都是3个一组的，猜测到应该是转成三位三进制数，然后再变成对应的第几个字母。
+至于怎么转，应该还是和镜面有关。每个字母在这三种密码中都是一个图形，图形在镜子中的倒影则对应了另一个字母的密码，找到用的哪种密码，就可以变成数字了。
+北京人儿到纽约 这道题一看就和儿话音有关，但是题目里只有一些词，并没有其他提示，需要自己找到联系。
+一个尝试就是把每个词翻译成英文后，后面加上er。发现它们会变成新的词汇，其中“是”这个有点难，想了很久才发现要用be。之后又发现这些词可以两两一组，暗示了一个东西，而这个东西就是填空需要的词。
+屁股 butter 是 beer Harry Potter 关 offer 关心 career interview 玉米 corner 分 center position 宠物 peter 公园 parker spider man 这时候会发现，英文填空的地方*代表的也是er，这道题的主题果然就是er。之后按照字母提取得到&#34;vyimportantpson&#34;，这里也少了两个er，补充后得到&#34;very important person&#34;，但是提交不正确。后来队友想到了它们有个缩写是VIP，而vip加上er也能凑出新单词，正确答案就这样出来了。
+算算看吧 这道题给了很多算式和结果，很明显需要用不同进制使算式成立。然后注意只需要从二进制检查到26进制就行，因为只有26个字母。
+算式 答案 进制 十进制结果 字母 12-0.22-0.02 11.1 4 5.25 d 357-345.670.02 11.2 9 10.222 i 88÷8&#43;222÷888 11.49 18 19.25 r (10-1)x10 40 5 20 e (2000-1)÷10&#43;10 202.2 3 20." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wind1900.github.io/puzzlehunt/ccbc15%E6%80%BB%E7%BB%931/" /><meta property="article:section" content="puzzlehunt" />
+<meta property="article:published_time" content="2024-08-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-08-19T00:00:00+00:00" />
+
+
+
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="CCBC15总结1"/>
+<meta name="twitter:description" content="简介 一年一度的CCBC又到了，今年不再孤军奋战，并且完成了小目标：前100名成功完赛。 有了队友大家一起想问题思路会更多，在一起讨论也会很开心。 本来是92名的，结果前面有几个作弊队伍被抓出来变成了88名。下图是解题时间统计。 镜中何物 前面几个区的题都挺简单，直接从第三个区开始讲起。 首先左边的字母连起来读，会得到三个单词shadow，pigpen，semaphore，后面两个代表猪圈密码和旗语，第一个没有想出来。现在知道了第一个也是一个和旗语很像的密码，更熟悉的名称是Chain of Death，发表在Shadow杂志上。
+之后注意到名字左边还对应了0、1、2，字母都是3个一组的，猜测到应该是转成三位三进制数，然后再变成对应的第几个字母。
+至于怎么转，应该还是和镜面有关。每个字母在这三种密码中都是一个图形，图形在镜子中的倒影则对应了另一个字母的密码，找到用的哪种密码，就可以变成数字了。
+北京人儿到纽约 这道题一看就和儿话音有关，但是题目里只有一些词，并没有其他提示，需要自己找到联系。
+一个尝试就是把每个词翻译成英文后，后面加上er。发现它们会变成新的词汇，其中“是”这个有点难，想了很久才发现要用be。之后又发现这些词可以两两一组，暗示了一个东西，而这个东西就是填空需要的词。
+屁股 butter 是 beer Harry Potter 关 offer 关心 career interview 玉米 corner 分 center position 宠物 peter 公园 parker spider man 这时候会发现，英文填空的地方*代表的也是er，这道题的主题果然就是er。之后按照字母提取得到&#34;vyimportantpson&#34;，这里也少了两个er，补充后得到&#34;very important person&#34;，但是提交不正确。后来队友想到了它们有个缩写是VIP，而vip加上er也能凑出新单词，正确答案就这样出来了。
+算算看吧 这道题给了很多算式和结果，很明显需要用不同进制使算式成立。然后注意只需要从二进制检查到26进制就行，因为只有26个字母。
+算式 答案 进制 十进制结果 字母 12-0.22-0.02 11.1 4 5.25 d 357-345.670.02 11.2 9 10.222 i 88÷8&#43;222÷888 11.49 18 19.25 r (10-1)x10 40 5 20 e (2000-1)÷10&#43;10 202.2 3 20."/>
+
+
+  
+  <meta itemprop="name" content="CCBC15总结1">
+<meta itemprop="description" content="简介 一年一度的CCBC又到了，今年不再孤军奋战，并且完成了小目标：前100名成功完赛。 有了队友大家一起想问题思路会更多，在一起讨论也会很开心。 本来是92名的，结果前面有几个作弊队伍被抓出来变成了88名。下图是解题时间统计。 镜中何物 前面几个区的题都挺简单，直接从第三个区开始讲起。 首先左边的字母连起来读，会得到三个单词shadow，pigpen，semaphore，后面两个代表猪圈密码和旗语，第一个没有想出来。现在知道了第一个也是一个和旗语很像的密码，更熟悉的名称是Chain of Death，发表在Shadow杂志上。
+之后注意到名字左边还对应了0、1、2，字母都是3个一组的，猜测到应该是转成三位三进制数，然后再变成对应的第几个字母。
+至于怎么转，应该还是和镜面有关。每个字母在这三种密码中都是一个图形，图形在镜子中的倒影则对应了另一个字母的密码，找到用的哪种密码，就可以变成数字了。
+北京人儿到纽约 这道题一看就和儿话音有关，但是题目里只有一些词，并没有其他提示，需要自己找到联系。
+一个尝试就是把每个词翻译成英文后，后面加上er。发现它们会变成新的词汇，其中“是”这个有点难，想了很久才发现要用be。之后又发现这些词可以两两一组，暗示了一个东西，而这个东西就是填空需要的词。
+屁股 butter 是 beer Harry Potter 关 offer 关心 career interview 玉米 corner 分 center position 宠物 peter 公园 parker spider man 这时候会发现，英文填空的地方*代表的也是er，这道题的主题果然就是er。之后按照字母提取得到&#34;vyimportantpson&#34;，这里也少了两个er，补充后得到&#34;very important person&#34;，但是提交不正确。后来队友想到了它们有个缩写是VIP，而vip加上er也能凑出新单词，正确答案就这样出来了。
+算算看吧 这道题给了很多算式和结果，很明显需要用不同进制使算式成立。然后注意只需要从二进制检查到26进制就行，因为只有26个字母。
+算式 答案 进制 十进制结果 字母 12-0.22-0.02 11.1 4 5.25 d 357-345.670.02 11.2 9 10.222 i 88÷8&#43;222÷888 11.49 18 19.25 r (10-1)x10 40 5 20 e (2000-1)÷10&#43;10 202.2 3 20."><meta itemprop="datePublished" content="2024-08-19T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2024-08-19T00:00:00+00:00" />
+<meta itemprop="wordCount" content="122">
+<meta itemprop="keywords" content="" />
+
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  
+  <link href="/style.min.css" rel="stylesheet">
+
+  
+
+  
+
+  
+</head>
+
+<body>
+  <header><a class="skip-link" href="#main-content">Skip to main content</a>
+
+<a href="/" class="title"><h1>ᕦʕ •ᴥ•ʔᕤ</h1></a>
+<nav>
+  <a href="/ctf/">CTF</a>
+
+  <a href="/puzzlehunt/">PuzzleHunt</a>
+
+<a href='https://wind1900.github.io/index.xml'>RSS</a>
+
+
+
+
+
+
+
+</nav>
+</header>
+  <main id="main-content">
+
+<h1>CCBC15总结1</h1>
+<p class="byline">
+  <time datetime='2024-08-19' pubdate>
+    2024-08-19
+  </time>
+  
+</p>
+
+<content>
+  
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+简介
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>一年一度的CCBC又到了，今年不再孤军奋战，并且完成了小目标：前100名成功完赛。
+有了队友大家一起想问题思路会更多，在一起讨论也会很开心。
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.3rb5lpsr9t.webp"/>
+</figure>
+
+本来是92名的，结果前面有几个作弊队伍被抓出来变成了88名。下图是解题时间统计。
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.7ax3bsk6cr.webp"/>
+</figure>
+</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+镜中何物
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>前面几个区的题都挺简单，直接从第三个区开始讲起。
+<figure><img src="https://wind1900.github.io/picx-images-hosting/image.7egp9igahd.webp"/>
+</figure>
+
+首先左边的字母连起来读，会得到三个单词shadow，pigpen，semaphore，后面两个代表猪圈密码和旗语，第一个没有想出来。现在知道了第一个也是一个和旗语很像的密码，更熟悉的名称是Chain of Death，发表在<a href="https://www.apprendre-en-ligne.net/crypto/bibliotheque/shadow/shadow340715.pdf">Shadow</a>杂志上。<br>
+之后注意到名字左边还对应了0、1、2，字母都是3个一组的，猜测到应该是转成三位三进制数，然后再变成对应的第几个字母。<br>
+至于怎么转，应该还是和镜面有关。每个字母在这三种密码中都是一个图形，图形在镜子中的倒影则对应了另一个字母的密码，找到用的哪种密码，就可以变成数字了。</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+北京人儿到纽约
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p><figure><img src="https://wind1900.github.io/picx-images-hosting/image.8hgeko7joc.webp"/>
+</figure>
+
+这道题一看就和儿话音有关，但是题目里只有一些词，并没有其他提示，需要自己找到联系。<br>
+一个尝试就是把每个词翻译成英文后，后面加上er。发现它们会变成新的词汇，其中“是”这个有点难，想了很久才发现要用be。之后又发现这些词可以两两一组，暗示了一个东西，而这个东西就是填空需要的词。</p>
+<table>
+<tbody>
+<tr>
+<td>屁股</td>
+<td>butter</td>
+<td>是</td>
+<td>beer</td>
+<td>Harry Potter</td>
+</tr>
+<tr>
+<td>关</td>
+<td>offer</td>
+<td>关心</td>
+<td>career</td>
+<td>interview</td>
+</tr>
+<tr>
+<td>玉米</td>
+<td>corner</td>
+<td>分</td>
+<td>center</td>
+<td>position</td>
+</tr>
+<tr>
+<td>宠物</td>
+<td>peter</td>
+<td>公园</td>
+<td>parker</td>
+<td>spider man</td>
+</tr>
+</tbody>
+</table>
+<p>
+这时候会发现，英文填空的地方*代表的也是er，这道题的主题果然就是er。之后按照字母提取得到&#34;vyimportantpson&#34;，这里也少了两个er，补充后得到&#34;very important person&#34;，但是提交不正确。后来队友想到了它们有个缩写是VIP，而vip加上er也能凑出新单词，正确答案就这样出来了。</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-2">
+<h2 id="headline-4">
+算算看吧
+</h2>
+<div id="outline-text-headline-4" class="outline-text-2">
+<p><figure><img src="https://wind1900.github.io/picx-images-hosting/image.60u65u4asx.webp"/>
+</figure>
+
+这道题给了很多算式和结果，很明显需要用不同进制使算式成立。然后注意只需要从二进制检查到26进制就行，因为只有26个字母。</p>
+<table>
+<thead>
+<tr>
+<th>算式</th>
+<th class="align-right">答案</th>
+<th class="align-right">进制</th>
+<th class="align-right">十进制结果</th>
+<th>字母</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12-0.22-0.02</td>
+<td class="align-right">11.1</td>
+<td class="align-right">4</td>
+<td class="align-right">5.25</td>
+<td>d</td>
+</tr>
+<tr>
+<td>357-345.670.02</td>
+<td class="align-right">11.2</td>
+<td class="align-right">9</td>
+<td class="align-right">10.222</td>
+<td>i</td>
+</tr>
+<tr>
+<td>88÷8+222÷888</td>
+<td class="align-right">11.49</td>
+<td class="align-right">18</td>
+<td class="align-right">19.25</td>
+<td>r</td>
+</tr>
+<tr>
+<td>(10-1)x10</td>
+<td class="align-right">40</td>
+<td class="align-right">5</td>
+<td class="align-right">20</td>
+<td>e</td>
+</tr>
+<tr>
+<td>(2000-1)÷10+10</td>
+<td class="align-right">202.2</td>
+<td class="align-right">3</td>
+<td class="align-right">20.667</td>
+<td>c</td>
+</tr>
+<tr>
+<td>66÷5.5-3</td>
+<td class="align-right">11</td>
+<td class="align-right">20</td>
+<td class="align-right">21</td>
+<td>t</td>
+</tr>
+<tr>
+<td>6^2</td>
+<td class="align-right">26</td>
+<td class="align-right">15</td>
+<td class="align-right">36</td>
+<td>o</td>
+</tr>
+<tr>
+<td>4x9+1</td>
+<td class="align-right">21</td>
+<td class="align-right">18</td>
+<td class="align-right">37</td>
+<td>r</td>
+</tr>
+<tr>
+<td>9x9+13</td>
+<td class="align-right">15</td>
+<td class="align-right">15</td>
+<td class="align-right">99</td>
+<td>o</td>
+</tr>
+<tr>
+<td>532÷2</td>
+<td class="align-right">244</td>
+<td class="align-right">6</td>
+<td class="align-right">100</td>
+<td>f</td>
+</tr>
+<tr>
+<td>2^7</td>
+<td class="align-right">68</td>
+<td class="align-right">20</td>
+<td class="align-right">128</td>
+<td>t</td>
+</tr>
+<tr>
+<td>1000+(3x2-1)^2</td>
+<td class="align-right">1100</td>
+<td class="align-right">5</td>
+<td class="align-right">150</td>
+<td>e</td>
+</tr>
+<tr>
+<td>245÷2</td>
+<td class="align-right">122.7</td>
+<td class="align-right">14</td>
+<td class="align-right">226.5</td>
+<td>n</td>
+</tr>
+<tr>
+<td>3^10</td>
+<td class="align-right">1433</td>
+<td class="align-right">5</td>
+<td class="align-right">243</td>
+<td>e</td>
+</tr>
+<tr>
+<td>491÷4</td>
+<td class="align-right">125.5</td>
+<td class="align-right">20</td>
+<td class="align-right">445.25</td>
+<td>t</td>
+</tr>
+</tbody>
+</table>
+<p>
+很可惜计算的时候算错一个，始终没提取出答案。后来又检查一遍才算对。</p>
+</div>
+</div>
+
+</content>
+<p>
+  
+</p>
+
+
+  </main>
+  <footer><small>
+  wind1900 | Made with <a href="https://github.com/clente/hugo-bearcub">ʕ•ᴥ•ʔ Cub</a>
+</small></footer>
+
+    
+</body>
+
+</html>
