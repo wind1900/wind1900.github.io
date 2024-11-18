@@ -7,8 +7,155 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>wind1900</copyright>
-    <lastBuildDate>Tue, 15 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://wind1900.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>浮点数里的NAN</title>
+      <link>https://wind1900.github.io/bug/%E6%B5%AE%E7%82%B9%E6%95%B0%E9%87%8C%E7%9A%84nan/</link>
+      <pubDate>Sun, 17 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://wind1900.github.io/bug/%E6%B5%AE%E7%82%B9%E6%95%B0%E9%87%8C%E7%9A%84nan/</guid>
+      <description>起因 最近在给一个Scheme语言写测试，要测的函数是 positive? 和 negative? ，很简单，就是判断一个实数的正负。为了使测试覆盖到更多的情况，在测试用例里特别加了 NaN ，根据文档里的说法，应该都返回 #f 即 false 才对。本地测试也没问题，然而发了PR后CI里的测试结果确有问题，linux和mac的测试环境里能跑过，windows上有一个测试一直出错，错误的地方如下：&#xA;(positive? 0.0) =&amp;gt; #t (negative? 0.0) =&amp;gt; #f 而在mac上是这样的：&#xA;(positive? +nan.0) =&amp;gt; #f (negative? +nan.0) =&amp;gt; #f 调查 发现这个问题后我首先有了两个想法：会不会是NaN的值在不同平台表示形式是不一样的，导致比较大小的结果不一样？为什么在windows上会显示0.0而不是+nan.0？ 针对显示为0.0的问题，我先用了更多的用例进行测试，对比mac和windows的结果来判断是否把NaN当成0来输出了：&#xA;(&amp;gt; 0.0 +nan.0) (&amp;lt; 0.0 +nan.0) (= 0.0 +nan.0) (&amp;gt; 0.0 0.0) (&amp;lt; 0.0 0.0) (= 0.0 0.0) 在mac和windows上的结果如下：&#xA;(&amp;gt; 0.0 +nan.0) #f #t (&amp;lt; 0.0 +nan.0) #f #f (= 0.0 +nan.0) #f #t (&amp;gt; 0.0 0.0) #f #f (&amp;lt; 0.</description>
+      <content:encoded><![CDATA[
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+起因
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>最近在给一个Scheme语言写测试，要测的函数是 <code>positive?</code> 和 <code>negative?</code> ，很简单，就是判断一个实数的正负。为了使测试覆盖到更多的情况，在测试用例里特别加了 <code>NaN</code> ，根据<a href="https://standards.scheme.org/official/r7rs.pdf">文档</a>里的说法，应该都返回 <code>#f</code> 即 <code>false</code> 才对。本地测试也没问题，然而发了PR后CI里的测试结果确有问题，linux和mac的测试环境里能跑过，windows上有一个测试一直出错，错误的地方如下：</p>
+<div class="src src-scheme">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scheme" data-lang="scheme"><span style="display:flex;"><span>  (positive? <span style="color:#ae81ff">0.0</span>) <span style="color:#66d9ef">=&gt; </span><span style="color:#66d9ef">#t</span>
+</span></span><span style="display:flex;"><span>  (negative? <span style="color:#ae81ff">0.0</span>) <span style="color:#66d9ef">=&gt; </span><span style="color:#66d9ef">#f</span></span></span></code></pre></div>
+</div>
+<p>而在mac上是这样的：</p>
+<div class="src src-scheme">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scheme" data-lang="scheme"><span style="display:flex;"><span>  (positive? +nan<span style="color:#f92672">.</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">=&gt; </span><span style="color:#66d9ef">#f</span>
+</span></span><span style="display:flex;"><span>  (negative? +nan<span style="color:#f92672">.</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">=&gt; </span><span style="color:#66d9ef">#f</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+调查
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>发现这个问题后我首先有了两个想法：会不会是NaN的值在不同平台表示形式是不一样的，导致比较大小的结果不一样？为什么在windows上会显示0.0而不是+nan.0？
+针对显示为0.0的问题，我先用了更多的用例进行测试，对比mac和windows的结果来判断是否把NaN当成0来输出了：</p>
+<div class="src src-scheme">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scheme" data-lang="scheme"><span style="display:flex;"><span>  (&gt; <span style="color:#ae81ff">0.0</span> +nan<span style="color:#f92672">.</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  (&lt; <span style="color:#ae81ff">0.0</span> +nan<span style="color:#f92672">.</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  (= <span style="color:#ae81ff">0.0</span> +nan<span style="color:#f92672">.</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  (&gt; <span style="color:#ae81ff">0.0</span> <span style="color:#ae81ff">0.0</span>)
+</span></span><span style="display:flex;"><span>  (&lt; <span style="color:#ae81ff">0.0</span> <span style="color:#ae81ff">0.0</span>)
+</span></span><span style="display:flex;"><span>  (= <span style="color:#ae81ff">0.0</span> <span style="color:#ae81ff">0.0</span>)</span></span></code></pre></div>
+</div>
+<p>在mac和windows上的结果如下：</p>
+<table>
+<tbody>
+<tr>
+<td>(&gt; 0.0 +nan.0)</td>
+<td>#f</td>
+<td>#t</td>
+</tr>
+<tr>
+<td>(&lt; 0.0 +nan.0)</td>
+<td>#f</td>
+<td>#f</td>
+</tr>
+<tr>
+<td>(= 0.0 +nan.0)</td>
+<td>#f</td>
+<td>#t</td>
+</tr>
+<tr>
+<td>(&gt; 0.0 0.0)</td>
+<td>#f</td>
+<td>#f</td>
+</tr>
+<tr>
+<td>(&lt; 0.0 0.0)</td>
+<td>#f</td>
+<td>#f</td>
+</tr>
+<tr>
+<td>(= 0.0 0.0)</td>
+<td>#t</td>
+<td>#t</td>
+</tr>
+</tbody>
+</table>
+<p>通过前三行和后三行的对比，可知程序中并没有把NaN当作0.0在操作。下面就来研究为什么会显示成0.0，这部分源码在<a href="https://cm-gitlab.stanford.edu/bil/s7/-/blob/master/s7.c?ref_type=heads#L14701">s7.c</a>中的函数 <code>dtoa_filter_special</code></p>
+<div class="src src-cpp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int32_t</span> <span style="color:#a6e22e">dtoa_filter_special</span>(<span style="color:#66d9ef">double</span> fp, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>dest, <span style="color:#66d9ef">bool</span> neg)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint64_t</span> bits;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> nan;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (fp <span style="color:#f92672">==</span> <span style="color:#ae81ff">0.0</span>)
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>        dest[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0&#39;</span>; dest[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;.&#39;</span>; dest[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">3</span>);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    bits <span style="color:#f92672">=</span> dtoa_get_dbits(fp);
+</span></span><span style="display:flex;"><span>    nan <span style="color:#f92672">=</span> (bits <span style="color:#f92672">&amp;</span> dtoa_expmask) <span style="color:#f92672">==</span> dtoa_expmask;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>nan) <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    ......</span></span></code></pre></div>
+</div>
+<p>在本地调试的时候发现，传进来的fp的值就是NaN（也就是说之前第一个想法是错的），然后会判断是否和0相等，如果等于，就会把要输出的字符串dest设为&#34;0.0&#34;，也就是报错机器上显示的结果。
+这样看来，在报错机器上确实存在NaN和0比较结果“不对”的情况，而 <code>positive?</code> 和 <code>negative?</code> 也是通过与0判断实现的，因此也受到了影响。<br>
+从上面的测试可以看出NaN即小于0又等于0，这样的数肯定是不存在的。再试几个其它数与NaN比较，发现任意非正实数都会比NaN大。那究竟是什么导致了这个结果呢？<br>
+这时我已经没思路了，后来项目上的另一个师兄后来发现，是vc的编译选项导致的（<a href="https://learn.microsoft.com/en-us/cpp/build/reference/fp-specify-floating-point-behavior?view=msvc-170">/fp Specify floating-point behavior</a>）。在CI里用了 <code>/fp:fast</code> 所以结果不正确，改成 <code>/fp:precise</code> 三个平台测试结果就一致没问题了。</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+继续研究
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p>IEEE754中其实说明了NaN在浮点数中有相对应的表示，比如在我本地测试的时候，它的值为0x7ff8000000000000。在上面的转字符串代码中，也使用了相应的方法判断是否是NaN： <code>nan = (bits &amp; dtoa_expmask) == dtoa_expmask</code><br>
+那为什么会出现不一样的结果呢？首先看看不同编译选项生成的汇编代码是否相同，这里对比了好久也没发现异样。幸好在另一位大佬的帮助下才发现原来问题就出在不同的汇编代码，之前眼花没发现。。比如:<br>
+<code>NaN&lt;0</code> 的结果不同，因为二者汇编代码分别为:</p>
+<ul>
+<li>默认情况（/fp:precise）</li>
+</ul>
+<div class="src src-asm">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">xorps</span>   <span style="color:#66d9ef">xmm0</span>, <span style="color:#66d9ef">xmm0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">comisd</span>  <span style="color:#66d9ef">xmm0</span>, <span style="color:#66d9ef">mmword</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">NaNValue</span> (<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">8</span>)]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">jbe</span>     <span style="color:#66d9ef">main</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">0x41</span></span></span></code></pre></div>
+</div>
+<ul>
+<li>/fp:fast的情况</li>
+</ul>
+<div class="src src-asm">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">movsd</span>   <span style="color:#66d9ef">xmm0</span>, <span style="color:#66d9ef">mmword</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">NaNValue</span> (<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">8</span>)]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">comisd</span>  <span style="color:#66d9ef">xmm0</span>, <span style="color:#66d9ef">mmword</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">real@0000000000000000</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">jae</span>     <span style="color:#66d9ef">main</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">0x46</span></span></span></code></pre></div>
+</div>
+<p>使用了不同比较方式和判断指令</p>
+<p>
+<code>NaN==0</code> 结果不同，因为二者汇编代码分别为:</p>
+<ul>
+<li>默认情况</li>
+</ul>
+<div class="src src-asm">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">movsd</span>   <span style="color:#66d9ef">xmm0</span>, <span style="color:#66d9ef">mmword</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">NaNValue</span> (<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">8</span>)]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ucomisd</span> <span style="color:#66d9ef">xmm0</span>, <span style="color:#66d9ef">mmword</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">real@0000000000000000</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">jp</span>      <span style="color:#66d9ef">main</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">0x6f</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">jne</span>     <span style="color:#66d9ef">main</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">0x6f</span></span></span></code></pre></div>
+</div>
+<ul>
+<li>/fp:fast的情况</li>
+</ul>
+<div class="src src-asm">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">movsd</span>   <span style="color:#66d9ef">xmm0</span>, <span style="color:#66d9ef">mmword</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">NaNValue</span> (<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">8</span>)]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ucomisd</span> <span style="color:#66d9ef">xmm0</span>, <span style="color:#66d9ef">mmword</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">real@0000000000000000</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">jne</span>     <span style="color:#66d9ef">main</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">0x72</span></span></span></code></pre></div>
+</div>
+<p>多了一个判断指令</p>
+<p>
+也就是说，不管在哪种编译选项下，汇编指令运行得到的结果都是一致的，而是编译器通过生成不同的指令而达到令NaN比较结果不一样的效果</p>
+</div>
+</div>
+]]></content:encoded>
+    </item>
     <item>
       <title>JustHunt总结四</title>
       <link>https://wind1900.github.io/puzzlehunt/justhunt%E6%80%BB%E7%BB%93%E5%9B%9B/</link>
