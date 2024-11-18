@@ -14,7 +14,7 @@
       <link>https://wind1900.github.io/bug/%E6%B5%AE%E7%82%B9%E6%95%B0%E9%87%8C%E7%9A%84nan/</link>
       <pubDate>Sun, 17 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://wind1900.github.io/bug/%E6%B5%AE%E7%82%B9%E6%95%B0%E9%87%8C%E7%9A%84nan/</guid>
-      <description>起因 最近在给一个Scheme语言写测试，要测的函数是 positive? 和 negative? ，很简单，就是判断一个实数的正负。为了使测试覆盖到更多的情况，在测试用例里特别加了 NaN ，根据文档里的说法，应该都返回 #f 即 false 才对。本地测试也没问题，然而发了PR后CI里的测试结果确有问题，linux和mac的测试环境里能跑过，windows上有一个测试一直出错，错误的地方如下：&#xA;(positive? 0.0) =&amp;gt; #t (negative? 0.0) =&amp;gt; #f 而在mac上是这样的：&#xA;(positive? +nan.0) =&amp;gt; #f (negative? +nan.0) =&amp;gt; #f 调查 发现这个问题后我首先有了两个想法：会不会是NaN的值在不同平台表示形式是不一样的，导致比较大小的结果不一样？为什么在windows上会显示0.0而不是+nan.0？ 针对显示为0.0的问题，我先用了更多的用例进行测试，对比mac和windows的结果来判断是否把NaN当成0来输出了：&#xA;(&amp;gt; 0.0 +nan.0) (&amp;lt; 0.0 +nan.0) (= 0.0 +nan.0) (&amp;gt; 0.0 0.0) (&amp;lt; 0.0 0.0) (= 0.0 0.0) 在mac和windows上的结果如下：&#xA;(&amp;gt; 0.0 +nan.0) #f #t (&amp;lt; 0.0 +nan.0) #f #f (= 0.0 +nan.0) #f #t (&amp;gt; 0.0 0.0) #f #f (&amp;lt; 0.</description>
+      <description>起因 最近在给一个Scheme语言写测试，要测的函数是 positive? 和 negative? ，很简单，就是判断一个实数的正负。为了使测试覆盖到更多的情况，在测试用例里特别加了 NaN ，根据文档里的说法，应该都返回 #f 即 false 才对。本地测试也没问题，然而发了PR后CI里的测试结果确有问题，linux和mac的测试环境里能跑过，windows上有一个测试一直出错，错误的地方如下：&#xA;(positive? 0.0) =&amp;gt; #t (negative? 0.0) =&amp;gt; #f 而在mac上是这样的：&#xA;(positive? +nan.0) =&amp;gt; #f (negative? +nan.0) =&amp;gt; #f 调查 发现这个问题后我首先有了两个想法：会不会是NaN的值在不同平台表示形式是不一样的，导致比较大小的结果不一样？为什么在windows上会显示0.0而不是+nan.0？ 针对显示为0.0的问题，我先用了更多的用例进行测试，对比mac和windows的结果来判断是否把NaN当成0来输出了：&#xA;(&amp;gt; 0.0 +nan.0) (&amp;lt; 0.0 +nan.0) (= 0.0 +nan.0) (&amp;gt; 0.0 0.0) (&amp;lt; 0.0 0.0) (= 0.0 0.0) 在mac和windows上的结果如下：&#xA;mac windows (&amp;gt; 0.0 +nan.0) #f #t (&amp;lt; 0.0 +nan.0) #f #f (= 0.0 +nan.0) #f #t (&amp;gt; 0.</description>
       <content:encoded><![CDATA[
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
@@ -51,6 +51,11 @@
 <p>在mac和windows上的结果如下：</p>
 <table>
 <tbody>
+<tr>
+<td></td>
+<td>mac</td>
+<td>windows</td>
+</tr>
 <tr>
 <td>(&gt; 0.0 +nan.0)</td>
 <td>#f</td>
